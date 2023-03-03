@@ -3,8 +3,11 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
-	"authApi"
+	"github.com/Godyu97/vege9/jwtApi"
+	middleware "github.com/Godyu97/vege9/middleWare"
+	"github.com/Godyu97/vege9/router/authApi"
 	"net/http"
+	"time"
 )
 
 func InitHttp(r *gin.Engine) {
@@ -15,5 +18,11 @@ func InitHttp(r *gin.Engine) {
 	})
 
 	auth := r.Group("/auth")
+	middleware.SetJwtObj(
+		jwtApi.InitJwt("godyu",
+			jwtApi.WithExp(time.Hour),
+			jwtApi.WithIssuer("hongyu"),
+		))
+	auth.Use(middleware.JWTAuthMiddleware())
 	auth.Any("*uri", RegApiHandler(authApi.AuthApiObj))
 }

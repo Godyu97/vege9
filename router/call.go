@@ -7,7 +7,7 @@ import (
 	"log"
 	"reflect"
 
-	"vege/vegeTools"
+	"github.com/Godyu97/vege9/vegeTools"
 )
 
 const (

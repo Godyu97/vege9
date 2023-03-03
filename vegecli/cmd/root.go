@@ -1,19 +1,17 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"os"
 
-	"github.com/spf13/cobra"
 	"fmt"
-	"vege/vegecli/newps"
+	"github.com/spf13/cobra"
+
+	"github.com/Godyu97/vege9/vegecli/newps"
 	"strconv"
 )
-
-
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -28,24 +26,24 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args)>0{
+		if len(args) > 0 {
 			switch args[0] {
 			case "newps":
-				if len(args)==2{
-					n,err:=strconv.Atoi(args[1])
+				if len(args) == 2 {
+					n, err := strconv.Atoi(args[1])
 					if err != nil {
-						fmt.Println("IZHSMxwu 请输入有效数字：",err)
+						fmt.Println("IZHSMxwu 请输入有效数字：", err)
 						return
 					}
 					fmt.Println(newps.RandStringBytesMask(n))
 
-				}else {
+				} else {
 					fmt.Println(newps.RandStringBytesMask(8))
 				}
 
 			}
 
-		}else {
+		} else {
 			fmt.Println("need param~")
 		}
 
@@ -72,5 +70,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-

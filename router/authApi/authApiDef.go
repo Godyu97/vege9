@@ -1,6 +1,8 @@
 package authApi
 
 import (
+	"errors"
+	middleware "github.com/Godyu97/vege9/middleWare"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -28,4 +30,13 @@ func (a AuthApi) SendBad(c *gin.Context, errMsg string, body any) {
 		Body: body,
 	}
 	c.AbortWithStatusJSON(http.StatusInternalServerError, resp)
+}
+
+const CheckAuthErrMsg = "权限不足2333"
+
+func (a AuthApi) CheckAuth(c *gin.Context) error {
+	if _, exist := c.Get(middleware.JwtCtxErrKey); exist {
+		return errors.New(CheckAuthErrMsg)
+	}
+	return nil
 }
