@@ -5,7 +5,7 @@ import (
 
 	"github.com/Godyu97/vege9/jwtApi"
 	middleware "github.com/Godyu97/vege9/middleWare"
-	"github.com/Godyu97/vege9/router/authApi"
+	"github.com/Godyu97/vege9/router/demoApi"
 	"net/http"
 	"time"
 )
@@ -24,5 +24,5 @@ func InitHttp(r *gin.Engine) {
 			jwtApi.WithIssuer("hongyu"),
 		))
 	auth.Use(middleware.JWTAuthMiddleware())
-	auth.Any("*uri", RegApiHandler(authApi.AuthApiObj))
+	auth.Any("*uri", RegApiHandler(demoApi.ApiObj))
 }

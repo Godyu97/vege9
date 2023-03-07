@@ -1,4 +1,4 @@
-package authApi
+package demoApi
 
 import (
 	"errors"
@@ -7,25 +7,25 @@ import (
 	"net/http"
 )
 
-var AuthApiObj AuthApi
+var ApiObj Api
 
-type AuthResp struct {
+type ApiResp struct {
 	Err  string      `json:"err"`
 	Body interface{} `json:"body"`
 }
 
-type AuthApi struct{}
+type Api struct{}
 
-func (a AuthApi) SendOk(c *gin.Context, body any) {
-	resp := AuthResp{
+func (a Api) SendOk(c *gin.Context, body any) {
+	resp := ApiResp{
 		Err:  "",
 		Body: body,
 	}
 	c.JSON(http.StatusOK, resp)
 }
 
-func (a AuthApi) SendBad(c *gin.Context, errMsg string, body any) {
-	resp := AuthResp{
+func (a Api) SendBad(c *gin.Context, errMsg string, body any) {
+	resp := ApiResp{
 		Err:  errMsg,
 		Body: body,
 	}
@@ -34,7 +34,7 @@ func (a AuthApi) SendBad(c *gin.Context, errMsg string, body any) {
 
 const CheckAuthErrMsg = "权限不足2333"
 
-func (a AuthApi) CheckAuth(c *gin.Context) error {
+func (a Api) CheckAuth(c *gin.Context) error {
 	if _, exist := c.Get(middleware.JwtCtxErrKey); exist {
 		return errors.New(CheckAuthErrMsg)
 	}

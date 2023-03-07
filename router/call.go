@@ -11,12 +11,13 @@ import (
 )
 
 const (
-	SendOk  = "SendOk"
-	SendBad = "SendBad"
+	SendOk    = "SendOk"
+	SendBad   = "SendBad"
+	CheckAuth = "CheckAuth"
 )
 
 func Call(ctx context.Context, service interface{}, methodName string, request string) (response interface{}, err error) {
-	if methodName == SendOk || methodName == SendBad {
+	if methodName == SendOk || methodName == SendBad || methodName == CheckAuth {
 		return "",
 			errors.New("YdNRJNuJ 非可用的api")
 	}
