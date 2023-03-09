@@ -23,24 +23,24 @@ func InitLogger(file string, level zapcore.Level) {
 
 func LogDebug(msg ...any) {
 	if logger != nil {
-		logger.Debug(fmt.Sprintln(msg))
+		logger.Debug(fmt.Sprintln(msg...))
 	}
 }
 func LogInfo(msg ...any) {
 	if logger != nil {
-		logger.Info(fmt.Sprintln(msg))
+		logger.Info(fmt.Sprintln(msg...))
 	}
 }
 
 func LogError(msg ...any) {
 	if logger != nil {
-		logger.Error(fmt.Sprintln(msg))
+		logger.Error(fmt.Sprintln(msg...))
 	}
 }
 
 func LogPanic(msg ...any) {
 	if logger != nil {
-		logger.Panic(fmt.Sprintln(msg))
+		logger.Panic(fmt.Sprintln(msg...))
 	}
 }
 
