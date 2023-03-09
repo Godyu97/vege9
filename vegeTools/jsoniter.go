@@ -4,22 +4,22 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-func UnmarshalFromString(str string, v interface{}) error {
+func JsonUnmarshalFromString(str string, v interface{}) error {
 	return jsoniter.ConfigCompatibleWithStandardLibrary.
 		UnmarshalFromString(str, v)
 }
 
-func MarshalToString(v interface{}) (string, error) {
+func JsonMarshalToString(v interface{}) (string, error) {
 	return jsoniter.ConfigCompatibleWithStandardLibrary.
 		MarshalToString(v)
 }
 
-func Marshal(v interface{}) ([]byte, error) {
+func JsonMarshal(v interface{}) ([]byte, error) {
 	return jsoniter.ConfigCompatibleWithStandardLibrary.
 		Marshal(v)
 }
 
-func Unmarshal(data []byte, v interface{}) error {
+func JsonUnmarshal(data []byte, v interface{}) error {
 	return jsoniter.ConfigCompatibleWithStandardLibrary.
 		Unmarshal(data, v)
 }

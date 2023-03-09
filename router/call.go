@@ -37,7 +37,7 @@ func Call(ctx context.Context, service interface{}, methodName string, request s
 	parameter := method.Type.In(2)
 	req := reflect.New(parameter.Elem()).Interface()
 	if len(request) != 0 {
-		err = vegeTools.UnmarshalFromString(request, req)
+		err = vegeTools.JsonUnmarshalFromString(request, req)
 		if err != nil {
 			log.Println("bcCggifz ", err)
 			return "",

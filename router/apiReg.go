@@ -6,9 +6,12 @@ import (
 )
 
 type Apier interface {
+	//200
 	SendOk(c *gin.Context, body any)
+	//500
 	SendBad(c *gin.Context, message string, body any)
-	CheckAuth(c *gin.Context) error
+	//401
+	CheckAuth(c *gin.Context, body any) error
 }
 
 // 根据*uri执行对应方法
@@ -20,15 +23,16 @@ func RegApiHandler(bind Apier) gin.HandlerFunc {
 			bind.SendBad(ctx, err.Error(), nil)
 			return
 		}
-		if err = bind.CheckAuth(ctx); err != nil {
-			bind.SendBad(ctx, err.Error(), nil)
+		if err = bind.CheckAuth(ctx, nil); err != nil {
 			return
 		}
 		resp, err := Call(ctx, bind, methodName, string(body))
 		if err != nil {
 			bind.SendBad(ctx, err.Error(), nil)
+			return
 		} else {
 			bind.SendOk(ctx, resp)
+			return
 		}
 	}
 }

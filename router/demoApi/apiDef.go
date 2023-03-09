@@ -10,8 +10,8 @@ import (
 var ApiObj Api
 
 type ApiResp struct {
-	Err  string      `json:"err"`
-	Body interface{} `json:"body"`
+	Err  string      `json:"Err"`
+	Body interface{} `json:"Body"`
 }
 
 type Api struct{}
@@ -34,9 +34,15 @@ func (a Api) SendBad(c *gin.Context, errMsg string, body any) {
 
 const CheckAuthErrMsg = "权限不足2333"
 
-func (a Api) CheckAuth(c *gin.Context) error {
+func (a Api) CheckAuth(c *gin.Context, body any) error {
 	if _, exist := c.Get(middleware.JwtCtxErrKey); exist {
-		return errors.New(CheckAuthErrMsg)
+		err := errors.New(CheckAuthErrMsg)
+		resp := ApiResp{
+			Err:  err.Error(),
+			Body: body,
+		}
+		c.AbortWithStatusJSON(http.StatusUnauthorized, resp)
+		return err
 	}
 	return nil
 }

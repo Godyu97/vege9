@@ -48,7 +48,7 @@ func getLogWriter(file string) zapcore.WriteSyncer {
 	//file, _ := os.Create(filePath)
 	fileObj := &lumberjack.Logger{
 		Filename: file, // 日志文件路径，默认 os.TempDir()
-		MaxSize:  1000, // 每个日志文件保存10M，默认 100M
+		MaxSize:  1000, // 每个日志文件保存1000M，默认 100M
 		Compress: true, // 是否压缩，默认不压缩
 	}
 	// 利用io.MultiWriter支持文件和终端两个输出目标

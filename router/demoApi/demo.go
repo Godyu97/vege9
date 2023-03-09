@@ -8,16 +8,16 @@ import (
 )
 
 type DemoPostFnReq struct {
-	Id string `json:"id"`
+	Id string `json:"Id"`
 }
 type DemoPostFnResp struct {
-	Data string `json:"data"`
+	Data string `json:"Data"`
 }
 
 func (a Api) DemoPostFn(ctx *gin.Context, req *DemoPostFnReq) (resp *DemoPostFnResp, err error) {
 	resp = &DemoPostFnResp{}
 	t, _ := ctx.Get(middleware.JwtCtxTokenKey)
 	token := t.(*jwtApi.MyClaims)
-	resp.Data, _ = vegeTools.MarshalToString(token.AuthData)
+	resp.Data, _ = vegeTools.JsonMarshalToString(token.AuthData)
 	return resp, nil
 }
