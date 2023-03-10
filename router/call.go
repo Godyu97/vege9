@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"reflect"
 
 	"github.com/Godyu97/vege9/vegeTools"
@@ -39,7 +38,6 @@ func Call(ctx context.Context, service interface{}, methodName string, request s
 	if len(request) != 0 {
 		err = vegeTools.JsonUnmarshalFromString(request, req)
 		if err != nil {
-			log.Println("bcCggifz ", err)
 			return "",
 				errors.New("bcCggifz req 解析错误")
 		}
