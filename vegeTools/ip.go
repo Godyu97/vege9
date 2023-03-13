@@ -62,6 +62,9 @@ func GetPublicIp_ipsb() (ip string, err error) {
 	if err != nil {
 		return "", err
 	}
-
-	return command.String(), err
+	output, err := command.Output()
+	if err != nil {
+		return "", err
+	}
+	return string(output), nil
 }
