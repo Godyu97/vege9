@@ -34,30 +34,32 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+
 		if len(args) > 0 {
 			switch args[0] {
 			case Cmd_newps:
+				n := 8
 				if len(args) == 2 {
-					n, err := strconv.Atoi(args[1])
+					var err error
+					n, err = strconv.Atoi(args[1])
 					if err != nil {
-						fmt.Println("IZHSMxwu 请输入有效数字：", err)
+						log.Println("IZHSMxwu 请输入有效数字：", err)
 						return
 					}
-					fmt.Println(vegeTools.RandStringBytesMask(n))
-
-				} else {
-					fmt.Println(vegeTools.RandStringBytesMask(8))
 				}
+				fmt.Println(vegeTools.RandStringBytesMask(n))
 			case Cmd_localip:
 				ip, err := vegeTools.GetLocalIpv4ByUdp()
 				if err != nil {
-					log.Fatalln(err)
+					log.Println(err)
+					return
 				}
 				fmt.Println(ip)
 			case Cmd_netinter:
 				list, err := vegeTools.GetLocalIpv4List()
 				if err != nil {
-					log.Fatalln(err)
+					log.Println(err)
+					return
 				}
 				for _, ip := range list {
 					fmt.Println(ip)
@@ -65,7 +67,8 @@ to quickly create a Cobra application.`,
 			case Cmd_ipsb:
 				ip, err := vegeTools.GetPublicIp_ipsb()
 				if err != nil {
-					log.Fatalln(err)
+					log.Println(err)
+					return
 				}
 				fmt.Println(ip)
 			}
