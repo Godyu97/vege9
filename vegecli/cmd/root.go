@@ -15,9 +15,10 @@ import (
 )
 
 const (
-	Cmd_newps   = "newps" //随机生成字符串
-	Cmd_localip = "localip"
-	Cmd_netip   = "netip"
+	Cmd_newps    = "newps" //随机生成字符串
+	Cmd_localip  = "localip"
+	Cmd_netinter = "netinter"
+	Cmd_ipsb     = "ipsb"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -53,7 +54,7 @@ to quickly create a Cobra application.`,
 					log.Fatalln(err)
 				}
 				fmt.Println(ip)
-			case Cmd_netip:
+			case Cmd_netinter:
 				list, err := vegeTools.GetLocalIpv4List()
 				if err != nil {
 					log.Fatalln(err)
@@ -61,6 +62,12 @@ to quickly create a Cobra application.`,
 				for _, ip := range list {
 					fmt.Println(ip)
 				}
+			case Cmd_ipsb:
+				ip, err := vegeTools.GetPublicIp_ipsb()
+				if err != nil {
+					log.Fatalln(err)
+				}
+				fmt.Println(ip)
 			}
 
 		} else {

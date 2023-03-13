@@ -55,13 +55,16 @@ func GetMacMap() map[string]string {
 	return res
 }
 
-// http获取 ip.sb 的响应值
+// curl ip.sb 的响应值 被GWF服务器不可用
 func GetPublicIp_ipsb() (ip string, err error) {
 	command := exec.Command("curl", "ip.sb")
+
 	//err = command.Run()
 	//if err != nil {
 	//	return "", err
 	//}
+
+	//Output 为将命令执行并返回输出
 	output, err := command.Output()
 	if err != nil {
 		return "", err
