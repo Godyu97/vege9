@@ -17,8 +17,8 @@ func main() {
 	//	Certificates:   []tls.Certificate{pair},
 	//	GetCertificate: nil,
 	//})
-	//mux.RunListener(listen)
+	//mux.Run(":8080")
 
-	log.Println(vegeTools.GetIpsb())
+	log.Println(vegeTools.GetPublicIp_ipsb())
 
 }

@@ -2,9 +2,8 @@ package vegeTools
 
 import (
 	"errors"
-	"io"
 	"net"
-	"net/http"
+	"os/exec"
 	"strings"
 )
 
@@ -57,11 +56,12 @@ func GetMacMap() map[string]string {
 }
 
 // http获取 ip.sb 的响应值
-func GetIpsb() (ip string, err error) {
-	resp, err := http.Get("http://ip.sb")
+func GetPublicIp_ipsb() (ip string, err error) {
+	command := exec.Command("curl", "ip.sb")
+	err = command.Run()
 	if err != nil {
 		return "", err
 	}
-	b, err := io.ReadAll(resp.Body)
-	return string(b), nil
+
+	return command.String(), err
 }
