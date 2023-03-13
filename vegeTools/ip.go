@@ -69,6 +69,7 @@ func GetPublicIp_ipsb() (ip string, err error) {
 	if err != nil {
 		return "", err
 	}
+	//多余换行符
 	res := string(output[:len(output)-1])
 	return res, nil
 }

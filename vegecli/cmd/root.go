@@ -15,10 +15,10 @@ import (
 )
 
 const (
-	Cmd_newps    = "newps" //随机生成字符串
-	Cmd_localip  = "localip"
-	Cmd_netinter = "netinter"
-	Cmd_ipsb     = "ipsb"
+	Cmd_newps    = "newps"    //随机生成字符串
+	Cmd_localip  = "localip"  //udp 得到 local ip
+	Cmd_netinter = "netinter" //网卡上的全部 ip
+	Cmd_ipsb     = "ipsb"     //curl ip.sb
 )
 
 // rootCmd represents the base command when called without any subcommands
