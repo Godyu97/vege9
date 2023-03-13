@@ -2,7 +2,9 @@ package vegeTools
 
 import (
 	"errors"
+	"io"
 	"net"
+	"net/http"
 	"strings"
 )
 
@@ -52,4 +54,14 @@ func GetMacMap() map[string]string {
 		res[inter.Name] = inter.HardwareAddr.String() //获取本机MAC地址
 	}
 	return res
+}
+
+// http获取 ip.sb 的响应值
+func GetIpsb() (ip string, err error) {
+	resp, err := http.Get("http://ip.sb")
+	if err != nil {
+		return "", err
+	}
+	b, err := io.ReadAll(resp.Body)
+	return string(b), nil
 }
