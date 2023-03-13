@@ -2,6 +2,7 @@ package vegeTools
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"os/exec"
 	"strings"
@@ -70,6 +71,7 @@ func GetPublicIp_ipsb() (ip string, err error) {
 		return "", err
 	}
 	res := string(output)
+	fmt.Print(len(res))
 	strings.ReplaceAll(res, "\n", "")
 	return res, nil
 }
