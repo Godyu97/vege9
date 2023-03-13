@@ -9,13 +9,20 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 
-	"github.com/Godyu97/vege9/vegecli/newps"
+	"github.com/Godyu97/vege9/vegeTools"
+	"log"
 	"strconv"
+)
+
+const (
+	Cmd_newps   = "newps" //随机生成字符串
+	Cmd_localip = "localip"
+	Cmd_netip   = "netip"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "vege",
+	Use:   "vegecli",
 	Short: "A brief description of your application",
 	Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
@@ -28,19 +35,32 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
 			switch args[0] {
-			case "newps":
+			case Cmd_newps:
 				if len(args) == 2 {
 					n, err := strconv.Atoi(args[1])
 					if err != nil {
 						fmt.Println("IZHSMxwu 请输入有效数字：", err)
 						return
 					}
-					fmt.Println(newps.RandStringBytesMask(n))
+					fmt.Println(vegeTools.RandStringBytesMask(n))
 
 				} else {
-					fmt.Println(newps.RandStringBytesMask(8))
+					fmt.Println(vegeTools.RandStringBytesMask(8))
 				}
-
+			case Cmd_localip:
+				ip, err := vegeTools.GetLocalIpv4ByUdp()
+				if err != nil {
+					log.Fatalln(err)
+				}
+				fmt.Println(ip)
+			case Cmd_netip:
+				list, err := vegeTools.GetLocalIpv4List()
+				if err != nil {
+					log.Fatalln(err)
+				}
+				for _, ip := range list {
+					fmt.Println(ip)
+				}
 			}
 
 		} else {
