@@ -58,10 +58,10 @@ func GetMacMap() map[string]string {
 // http获取 ip.sb 的响应值
 func GetPublicIp_ipsb() (ip string, err error) {
 	command := exec.Command("curl", "ip.sb")
-	err = command.Run()
-	if err != nil {
-		return "", err
-	}
+	//err = command.Run()
+	//if err != nil {
+	//	return "", err
+	//}
 	output, err := command.Output()
 	if err != nil {
 		return "", err
