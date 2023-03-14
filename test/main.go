@@ -27,4 +27,5 @@ func main() {
 	//}
 	hash := vegeTools.HashBySalt("123456asdasd", "jDnoKdXa")
 	log.Println(hash, vegeTools.CheckBySalt("123456asdasd", hash, "jDnoKdXa"))
+	log.Println("test version")
 }
