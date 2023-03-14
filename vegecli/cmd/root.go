@@ -95,7 +95,7 @@ to quickly create a Cobra application.`,
 					log.Println("bad param~")
 					return
 				}
-				log.Println(vegeTools.HashBySalt(args[1], ""))
+				fmt.Println(vegeTools.HashBySalt(args[1], ""))
 				return
 			}
 
