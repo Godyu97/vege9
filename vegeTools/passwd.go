@@ -1,7 +1,11 @@
 package vegeTools
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -16,7 +20,25 @@ const (
 	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
 )
 
-func RandStringBytesMask(n int) string {
+func RandStringMask(n int) string {
+	b := new(strings.Builder)
+	b.Grow(n)
+	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
+			b.WriteByte(letterBytes[idx])
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+	return b.String()
+}
+
+func RandBytesMask(n int) []byte {
 	b := make([]byte, n)
 	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
 	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
@@ -30,6 +52,19 @@ func RandStringBytesMask(n int) string {
 		cache >>= letterIdxBits
 		remain--
 	}
+	return b
+}
 
-	return string(b)
+// hmac sha2 and salt make hash
+func HashBySalt(ps, salt string) string {
+	mac := hmac.New(sha256.New, []byte(ps))
+	mac.Write([]byte(salt))
+	hs := mac.Sum(nil)
+	return fmt.Sprintf("%x", hs)
+}
+
+// check HashBySalt
+func CheckBySalt(checked, hash, salt string) bool {
+	expectedMAC := HashBySalt(checked, salt)
+	return hmac.Equal([]byte(hash), []byte(expectedMAC))
 }

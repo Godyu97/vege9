@@ -60,7 +60,7 @@ to quickly create a Cobra application.`,
 						return
 					}
 				}
-				fmt.Println(vegeTools.RandStringBytesMask(n))
+				fmt.Println(vegeTools.RandStringMask(n))
 			case Cmd_localip:
 				ip, err := vegeTools.GetLocalIpv4ByUdp()
 				if err != nil {

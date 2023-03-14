@@ -18,7 +18,13 @@ func main() {
 	//	GetCertificate: nil,
 	//})
 	//mux.Run(":8080")
-
-	log.Println(vegeTools.GetPublicIp_ipsb())
-
+	//for {
+	//	a := vegeTools.RandStringMask(20)
+	//	log.Println(a)
+	//	b := vegeTools.RandBytesMask(20)
+	//	log.Println(b)
+	//	time.Sleep(time.Second)
+	//}
+	hash := vegeTools.HashBySalt("123456asdasd", "jDnoKdXa")
+	log.Println(hash, vegeTools.CheckBySalt("123456asdasd", hash, "jDnoKdXa"))
 }

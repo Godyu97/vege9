@@ -13,3 +13,9 @@ func PanicToErr(fn func()) (err error) {
 	fn()
 	return err
 }
+
+func PanicIfErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
