@@ -19,6 +19,7 @@ const (
 	Cmd_localip  = "localip"  //udp 得到 local ip
 	Cmd_netinter = "netinter" //网卡上的全部 ip
 	Cmd_ipsb     = "ipsb"     //curl ip.sb
+	Cmd_hmacsha2 = "hmacsha2"
 )
 
 var cmdL = []string{
@@ -48,11 +49,12 @@ to quickly create a Cobra application.`,
 			}
 			return
 		}
-		if len(args) > 0 {
+		argn := len(args)
+		if argn > 0 {
 			switch args[0] {
 			case Cmd_newps:
 				n := 8
-				if len(args) == 2 {
+				if argn == 2 {
 					var err error
 					n, err = strconv.Atoi(args[1])
 					if err != nil {
@@ -61,6 +63,7 @@ to quickly create a Cobra application.`,
 					}
 				}
 				fmt.Println(vegeTools.RandStringMask(n))
+				return
 			case Cmd_localip:
 				ip, err := vegeTools.GetLocalIpv4ByUdp()
 				if err != nil {
@@ -68,6 +71,7 @@ to quickly create a Cobra application.`,
 					return
 				}
 				fmt.Println(ip)
+				return
 			case Cmd_netinter:
 				list, err := vegeTools.GetLocalIpv4List()
 				if err != nil {
@@ -77,6 +81,7 @@ to quickly create a Cobra application.`,
 				for _, ip := range list {
 					fmt.Println(ip)
 				}
+				return
 			case Cmd_ipsb:
 				ip, err := vegeTools.GetPublicIp_ipsb()
 				if err != nil {
@@ -84,12 +89,20 @@ to quickly create a Cobra application.`,
 					return
 				}
 				fmt.Println(ip)
+				return
+			case Cmd_hmacsha2:
+				if argn != 2 {
+					log.Println("bad param~")
+					return
+				}
+				log.Println(vegeTools.HashBySalt(args[1], ""))
+				return
 			}
 
 		} else {
 			fmt.Println("need param~")
+			return
 		}
-
 	},
 }
 
