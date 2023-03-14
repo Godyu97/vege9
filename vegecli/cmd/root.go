@@ -8,10 +8,7 @@ import (
 
 	"fmt"
 	"github.com/spf13/cobra"
-
-	"github.com/Godyu97/vege9/vegeTools"
 	"log"
-	"strconv"
 )
 
 const (
@@ -19,7 +16,7 @@ const (
 	Cmd_localip  = "localip"  //udp 得到 local ip
 	Cmd_netinter = "netinter" //网卡上的全部 ip
 	Cmd_ipsb     = "ipsb"     //curl ip.sb
-	Cmd_hmacsha2 = "hmacsha2"
+	Cmd_hmacsha2 = "hmacsha2" //计算hmac sha2的hash值
 )
 
 var cmdL = []string{
@@ -27,6 +24,7 @@ var cmdL = []string{
 	Cmd_localip,
 	Cmd_netinter,
 	Cmd_ipsb,
+	Cmd_hmacsha2,
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -39,68 +37,47 @@ examples and usage of using your application. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	Run: func(cmd *cobra.Command, args []string) {
+	//PreRun before Run
+	PreRun: func(cmd *cobra.Command, args []string) {
 		if *t {
 			fmt.Println("helping cmd list:")
 			for _, v := range cmdL {
 				fmt.Println(v)
 			}
+			needReturn = true
+			return
+		}
+		return
+	},
+	// Uncomment the following line if your bare application
+	// has an action associated with it:
+	Run: func(cmd *cobra.Command, args []string) {
+		if checkReturn() {
 			return
 		}
 		argn := len(args)
 		if argn > 0 {
 			switch args[0] {
 			case Cmd_newps:
-				n := 8
-				if argn == 2 {
-					var err error
-					n, err = strconv.Atoi(args[1])
-					if err != nil {
-						log.Println("IZHSMxwu 请输入有效数字：", err)
-						return
-					}
-				}
-				fmt.Println(vegeTools.RandStringMask(n))
+				newps(args, argn)
 				return
 			case Cmd_localip:
-				ip, err := vegeTools.GetLocalIpv4ByUdp()
-				if err != nil {
-					log.Println(err)
-					return
-				}
-				fmt.Println(ip)
+				localip()
 				return
 			case Cmd_netinter:
-				list, err := vegeTools.GetLocalIpv4List()
-				if err != nil {
-					log.Println(err)
-					return
-				}
-				for _, ip := range list {
-					fmt.Println(ip)
-				}
+				netinter()
 				return
 			case Cmd_ipsb:
-				ip, err := vegeTools.GetPublicIp_ipsb()
-				if err != nil {
-					log.Println(err)
-					return
-				}
-				fmt.Println(ip)
+				ipsb()
 				return
 			case Cmd_hmacsha2:
-				if argn != 2 {
-					log.Println("bad param~")
-					return
-				}
-				fmt.Println(vegeTools.HashBySalt(args[1], ""))
+				hmacsha2(args, argn)
 				return
+			default:
+				log.Println("unknown param~")
 			}
-
 		} else {
-			fmt.Println("need param~")
+			log.Println("need param~")
 			return
 		}
 	},
@@ -113,18 +90,4 @@ func Execute() {
 	if err != nil {
 		os.Exit(1)
 	}
-}
-
-var t *bool
-
-func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.vege.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	t = rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle cmd list")
 }
