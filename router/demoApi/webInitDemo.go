@@ -1,16 +1,16 @@
-package router
+package demoApi
 
 import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Godyu97/vege9/jwtApi"
 	middleware "github.com/Godyu97/vege9/middleWare"
-	"github.com/Godyu97/vege9/router/demoApi"
+	"github.com/Godyu97/vege9/router"
 	"net/http"
 	"time"
 )
 
-func InitHttp(r *gin.Engine) {
+func InitHttpDemo(r *gin.Engine) {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -24,5 +24,5 @@ func InitHttp(r *gin.Engine) {
 			jwtApi.WithIssuer("hongyu"),
 		))
 	auth.Use(middleware.JWTAuthMiddleware())
-	auth.Any("*uri", RegApiHandler(demoApi.ApiObj))
+	auth.Any("*uri", router.RegApiHandler(ApiObj))
 }
