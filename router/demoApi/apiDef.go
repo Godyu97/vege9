@@ -2,7 +2,7 @@ package demoApi
 
 import (
 	"errors"
-	middleware "github.com/Godyu97/vege9/middleWare"
+	"github.com/Godyu97/vege9/middleware"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

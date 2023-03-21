@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Godyu97/vege9/jwtApi"
-	middleware "github.com/Godyu97/vege9/middleWare"
+	"github.com/Godyu97/vege9/middleware"
 	"github.com/Godyu97/vege9/router"
 	"net/http"
 	"time"

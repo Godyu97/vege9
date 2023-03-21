@@ -1,8 +1,7 @@
 package demoApi
 
 import (
-	"github.com/Godyu97/vege9/jwtApi"
-	middleware "github.com/Godyu97/vege9/middleWare"
+	"github.com/Godyu97/vege9/middleware"
 	"github.com/Godyu97/vege9/vegeTools"
 	"github.com/gin-gonic/gin"
 )
@@ -16,8 +15,11 @@ type DemoPostFnResp struct {
 
 func (a Api) DemoPostFn(ctx *gin.Context, req *DemoPostFnReq) (resp *DemoPostFnResp, err error) {
 	resp = &DemoPostFnResp{}
-	t, _ := ctx.Get(middleware.JwtCtxTokenKey)
-	token := t.(*jwtApi.MyClaims)
-	resp.Data, _ = vegeTools.JsonMarshalToString(token.AuthData)
+	mc, err := middleware.GetMcFromCtx(ctx)
+	if err != nil {
+		panic(err)
+	}
+	//resp token obj json
+	resp.Data, _ = vegeTools.JsonMarshalToString(mc.AuthData)
 	return resp, nil
 }

@@ -1,14 +1,15 @@
 package middleware
 
 import (
+	"errors"
 	"github.com/Godyu97/vege9/jwtApi"
 	"github.com/gin-gonic/gin"
 )
 
 const (
-	JwtCookieKey   = "JwtAuthVege"
-	JwtCtxErrKey   = "JwtCtxErrVege"
-	JwtCtxTokenKey = "JwtCtxTokenVege"
+	JwtCookieKey = "VegeJwtToken"
+	JwtCtxErrKey = "VegeJwtCtxErr"
+	JwtCtxMcKey  = "VegeJwtCtxMc"
 )
 
 var jwtObj *jwtApi.JwtCfg
@@ -37,7 +38,16 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 			c.Set(JwtCtxErrKey, err)
 			return
 		}
-		//后续的处理函数可以通过c.Get("JwtCtxTokenKey")来获取请求的用户信息
-		c.Set(JwtCtxTokenKey, mc)
+		//后续的处理函数可以通过c.Get("JwtCtxMcKey")来获取请求的用户信息
+		c.Set(JwtCtxMcKey, mc)
 	}
+}
+
+func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
+	t, ok := ctx.Get(JwtCtxMcKey)
+	if !ok {
+		return nil, errors.New("hLrtXLod JwtCtxMcKey not exists")
+	}
+	mc = t.(*jwtApi.MyClaims)
+	return mc, nil
 }
