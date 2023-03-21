@@ -49,7 +49,7 @@ func publicKey(priv any) any {
 	}
 }
 
-// 生成自签tls证书 cert.pem key.pem 到指定文件夹中
+// TlsCertGenerateToFile 生成自签tls证书 cert.pem key.pem 到指定文件夹中
 func TlsCertGenerateToFile(path string) error {
 	flag.Parse()
 
@@ -191,7 +191,7 @@ func TlsCertGenerateToFile(path string) error {
 	return nil
 }
 
-// 生成自签tls证书 cert.pem key.pem 到map
+// TlsCertGenerateToMap 生成自签tls证书 cert.pem key.pem 到map
 func TlsCertGenerateToMap() (cert map[string]string, err error) {
 	flag.Parse()
 

@@ -12,6 +12,9 @@ import (
 
 var logger *zap.Logger
 
+// InitLogger
+// 初始化logger记录日志的文件
+// level 通常使用 	zapcore.DebugLevel / 	zapcore.InfoLevel
 func InitLogger(file string, level zapcore.Level) {
 	encoder := getEncoder()
 	writeSyncer := getLogWriter(file)

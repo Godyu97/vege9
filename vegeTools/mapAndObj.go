@@ -1,6 +1,6 @@
 package vegeTools
 
-// map[string] interface ---> obj
+// MapToObj map[string] interface ---> obj
 func MapToObj(m map[string]any, obj any) error {
 	j, err := JsonMarshal(m)
 	if err != nil {
@@ -9,7 +9,7 @@ func MapToObj(m map[string]any, obj any) error {
 	return JsonUnmarshal(j, obj)
 }
 
-// obj --->  map[string] interface
+// ObjToMap obj --->  map[string] interface
 func ObjToMap(obj any, m *map[string]any) error {
 	j, err := JsonMarshal(obj)
 	if err != nil {

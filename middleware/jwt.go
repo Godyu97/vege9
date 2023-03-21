@@ -14,6 +14,7 @@ const (
 
 var jwtObj *jwtApi.JwtCfg
 
+// SetJwtObj
 // 只允许调用一次
 func SetJwtObj(obj *jwtApi.JwtCfg) {
 	if obj != nil {
@@ -21,6 +22,7 @@ func SetJwtObj(obj *jwtApi.JwtCfg) {
 	}
 }
 
+// JWTAuthMiddleware
 // 基于JWT认证中间件
 func JWTAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -43,6 +45,8 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+// GetMcFromCtx
+// 从上下文取得 mc obj
 func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
 	t, ok := ctx.Get(JwtCtxMcKey)
 	if !ok {

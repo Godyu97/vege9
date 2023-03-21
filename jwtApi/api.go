@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// SignedTokenStr
 // 签发jwt token
 func (j *JwtCfg) SignedTokenStr(data interface{}) (string, error) {
 	c := MyClaims{
@@ -25,6 +26,7 @@ func (j *JwtCfg) SignedTokenStr(data interface{}) (string, error) {
 
 }
 
+// ParseToken
 // 解析 jwt token
 func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {
 	//解析token

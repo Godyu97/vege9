@@ -14,6 +14,7 @@ type Apier interface {
 	CheckAuth(c *gin.Context, body any) error
 }
 
+// RegApiHandler
 // 根据*uri执行对应方法
 func RegApiHandler(bind Apier) gin.HandlerFunc {
 	return func(ctx *gin.Context) {

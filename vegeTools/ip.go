@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// GetLocalIpv4List
 // 获取所有非lo的网卡ip
 func GetLocalIpv4List() ([]string, error) {
 	//获取所有网卡
@@ -31,6 +32,7 @@ func GetLocalIpv4List() ([]string, error) {
 
 }
 
+// GetLocalIpv4ByUdp
 // 获取 localIp by  net.Dial("udp", "8.8.8.8:53")
 func GetLocalIpv4ByUdp() (ip string, err error) {
 	conn, err := net.Dial("udp", "8.8.8.8:53")
@@ -42,6 +44,7 @@ func GetLocalIpv4ByUdp() (ip string, err error) {
 	return
 }
 
+// GetMacMap
 // 获取本机的MAC地址
 func GetMacMap() map[string]string {
 	interfaces, err := net.Interfaces()
@@ -55,6 +58,7 @@ func GetMacMap() map[string]string {
 	return res
 }
 
+// GetPublicIp_ipsb
 // curl ip.sb 的响应值 被GWF服务器不可用
 func GetPublicIp_ipsb() (ip string, err error) {
 	command := exec.Command("curl", "ip.sb")

@@ -9,6 +9,7 @@ type Cfg struct {
 
 var cfgObj *Cfg
 
+// GetCfg
 // 返回值类型，无法被外部更改
 func GetCfg() Cfg {
 	if cfgObj != nil {

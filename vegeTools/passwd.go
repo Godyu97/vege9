@@ -55,6 +55,7 @@ func RandBytesMask(n int) []byte {
 	return b
 }
 
+// HashBySalt
 // hmac sha2 and salt make hash
 func HashBySalt(ps, salt string) string {
 	mac := hmac.New(sha256.New, []byte(ps))
@@ -63,6 +64,7 @@ func HashBySalt(ps, salt string) string {
 	return fmt.Sprintf("%x", hs)
 }
 
+// CheckBySalt
 // check HashBySalt
 func CheckBySalt(checked, hash, salt string) bool {
 	expectedMAC := HashBySalt(checked, salt)

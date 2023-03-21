@@ -4,7 +4,7 @@ import (
 	"go.uber.org/ratelimit"
 )
 
-// 基于	"go.uber.org/ratelimit" 的漏桶算法限流器的封装
+// Rate 基于	"go.uber.org/ratelimit" 的漏桶算法限流器的封装
 type Rate struct {
 	ratelimit.Limiter
 }
