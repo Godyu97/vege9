@@ -9,7 +9,7 @@ import (
 
 type MysqlDSN struct {
 	Dsn      string
-	Type     string
+	Type     string //不需要了
 	Username string
 	Password string
 	Protocol string
@@ -18,19 +18,37 @@ type MysqlDSN struct {
 	Params   map[string]string
 }
 
-func NewDefaultMysqlDsn() *MysqlDSN {
+type OptionFn func(dsn *MysqlDSN)
+
+func NewDefaultMysqlDsn(ops ...OptionFn) *MysqlDSN {
 	m := make(map[string]string)
 	m["charset"] = "utf8mb4"
 	m["parseTime"] = "True"
-	return &MysqlDSN{
-		Dsn:      "",
-		Type:     "mysql",
-		Username: "",
-		Password: "",
-		Protocol: "tcp",
-		Address:  "",
-		Database: "",
-		Params:   m,
+	obj := new(MysqlDSN)
+	obj.Params = m
+	obj.Protocol = "tcp"
+	for _, op := range ops {
+		op(obj)
+	}
+	return obj
+}
+
+func WithAuth(u string, pswd string) OptionFn {
+	return func(o *MysqlDSN) {
+		o.Username = u
+		o.Password = pswd
+	}
+}
+
+func WithAddress(addr string) OptionFn {
+	return func(o *MysqlDSN) {
+		o.Address = addr
+	}
+}
+
+func WithDatabase(dbname string) OptionFn {
+	return func(o *MysqlDSN) {
+		o.Database = dbname
 	}
 }
 
