@@ -18,9 +18,9 @@ type MysqlDSN struct {
 	Params   map[string]string
 }
 
-type OptionFn func(dsn *MysqlDSN)
+type MysqlDsnOptionFunc func(dsn *MysqlDSN)
 
-func NewDefaultMysqlDsn(ops ...OptionFn) *MysqlDSN {
+func NewDefaultMysqlDsn(ops ...MysqlDsnOptionFunc) *MysqlDSN {
 	m := make(map[string]string)
 	m["charset"] = "utf8mb4"
 	m["parseTime"] = "True"
@@ -33,20 +33,20 @@ func NewDefaultMysqlDsn(ops ...OptionFn) *MysqlDSN {
 	return obj
 }
 
-func WithAuth(u string, pswd string) OptionFn {
+func WithAuth(u string, pswd string) MysqlDsnOptionFunc {
 	return func(o *MysqlDSN) {
 		o.Username = u
 		o.Password = pswd
 	}
 }
 
-func WithAddress(addr string) OptionFn {
+func WithAddress(addr string) MysqlDsnOptionFunc {
 	return func(o *MysqlDSN) {
 		o.Address = addr
 	}
 }
 
-func WithDatabase(dbname string) OptionFn {
+func WithDatabase(dbname string) MysqlDsnOptionFunc {
 	return func(o *MysqlDSN) {
 		o.Database = dbname
 	}
