@@ -9,7 +9,7 @@ import (
 
 type MysqlDSN struct {
 	Dsn      string
-	Type     string //不需要了
+	Type     string //deprecated
 	Username string
 	Password string
 	Protocol string
@@ -85,7 +85,6 @@ func (d *MysqlDSN) String() string {
 		i := 0
 		for key, value := range d.Params {
 			str += key + "=" + value
-
 			if i < len(d.Params)-1 {
 				str += "&"
 			}
