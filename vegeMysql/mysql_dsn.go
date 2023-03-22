@@ -1,4 +1,4 @@
-package vegeTools
+package vegeMysql
 
 import (
 	"net/url"

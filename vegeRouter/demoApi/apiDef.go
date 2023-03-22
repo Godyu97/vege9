@@ -2,7 +2,7 @@ package demoApi
 
 import (
 	"errors"
-	"github.com/Godyu97/vege9/middleware"
+	"github.com/Godyu97/vege9/midware"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -35,7 +35,7 @@ func (a Api) SendBad(c *gin.Context, errMsg string, body any) {
 const CheckAuthErrMsg = "权限不足2333"
 
 func (a Api) CheckAuth(c *gin.Context, body any) error {
-	if _, exist := c.Get(middleware.JwtCtxErrKey); exist {
+	if _, exist := c.Get(midware.JwtCtxErrKey); exist {
 		err := errors.New(CheckAuthErrMsg)
 		resp := ApiResp{
 			Err:  err.Error(),

@@ -1,4 +1,4 @@
-package config
+package vegeConfig
 
 import (
 	"github.com/spf13/viper"

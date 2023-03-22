@@ -1,4 +1,4 @@
-package router
+package vegeRouter
 
 import (
 	"github.com/gin-gonic/gin"

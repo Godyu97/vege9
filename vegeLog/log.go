@@ -1,4 +1,4 @@
-package vegeTools
+package vegeLog
 
 import (
 	"fmt"

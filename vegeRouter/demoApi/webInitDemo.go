@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Godyu97/vege9/jwtApi"
-	"github.com/Godyu97/vege9/middleware"
-	"github.com/Godyu97/vege9/router"
+	"github.com/Godyu97/vege9/midware"
+	"github.com/Godyu97/vege9/vegeRouter"
 	"net/http"
 	"time"
 )
@@ -18,11 +18,11 @@ func InitHttpDemo(r *gin.Engine) {
 	})
 
 	auth := r.Group("/auth")
-	middleware.SetJwtObj(
+	midware.SetJwtObj(
 		jwtApi.InitJwt("godyu",
 			jwtApi.WithExp(time.Hour),
 			jwtApi.WithIssuer("hongyu"),
 		))
-	auth.Use(middleware.JWTAuthMiddleware())
-	auth.Any("*uri", router.RegApiHandler(ApiObj))
+	auth.Use(midware.JWTAuthMiddleware())
+	auth.Any("*uri", vegeRouter.RegApiHandler(ApiObj))
 }
