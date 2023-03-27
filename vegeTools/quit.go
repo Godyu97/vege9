@@ -19,7 +19,7 @@ func (q *Quit) Close() error {
 	if q == nil {
 		return errors.New("VAdjAqPi nil quit")
 	}
-	q.ch <- syscall.SIGINT
+	q.ch <- syscall.SIGKILL
 	return nil
 }
 
