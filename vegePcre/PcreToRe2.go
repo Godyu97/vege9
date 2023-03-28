@@ -1,3 +1,6 @@
+// Notice:
+// sudo apt install libpcre++-dev
+
 // Copyright (c) 2011 Florian Weimer. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,7 +47,7 @@
 //
 // For details on the regular expression language implemented by this
 // package and the flags defined below, see the PCRE documentation.
-package vegeRegex
+package vegePcre
 
 /*
 #cgo LDFLAGS: -lpcre

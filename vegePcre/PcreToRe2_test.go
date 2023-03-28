@@ -1,4 +1,4 @@
-package vegeRegex
+package vegePcre
 
 import (
 	"testing"
