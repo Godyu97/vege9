@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	vegePcre.Replace("", "", "")
+	vegePcre.Replace("\\((.*?)\\)", "<\\1>", "Hello (world)!")
 }
