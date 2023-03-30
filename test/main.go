@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/Godyu97/vege9/vegePcre"
 )
 
 func main() {
-	var a []struct{}
-	fmt.Println(len(a))
+	vegePcre.Replace("", "", "")
 }
