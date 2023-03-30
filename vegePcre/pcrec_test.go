@@ -24,9 +24,10 @@ func TestCompile(t *testing.T) {
 
 func TestCompileFail(t *testing.T) {
 	var check = func(p, msg string, off int) {
-		_, err := Compile(p, 0)
+		_, e := Compile(p, 0)
+		err := e.(*CompileError)
 		switch {
-		case err == nil:
+		case e == nil:
 			t.Error(p)
 		case err.Message != msg:
 			t.Error(p, "Message", err.Message)

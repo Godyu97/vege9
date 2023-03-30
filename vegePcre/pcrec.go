@@ -289,6 +289,12 @@ func (m *Matcher) match(subjectptr *C.char, length, flags int) bool {
 		strconv.Itoa(int(rc)))
 }
 
+//TODO 未实现
+//func (m *Matcher) copysubstring(subjectptr *C.char, length, flags int) bool {
+//	//pcre_copy_substring(str, ovector, rc, 1, &new_str[k], strlen(replace));
+//	rc := C.pcre_copy_substring()
+//}
+
 // Returns true if a previous call to Matcher, MatcherString, Reset,
 // ResetString, Match or MatchString succeeded.
 func (m *Matcher) Matches() bool {
@@ -385,16 +391,18 @@ func (re *Regexp) FindIndex(bytes []byte, flags int) []int {
 	return nil
 }
 
+//TODO 无法匹配$1
 // Return a copy of a byte slice with pattern matches replaced by repl.
-func (re Regexp) ReplaceAll(bytes, repl []byte, flags int) []byte {
-	m := re.Matcher(bytes, 0)
-	r := []byte{}
-	for m.Match(bytes, flags) {
-		r = append(append(r, bytes[:m.ovector[0]]...), repl...)
-		bytes = bytes[m.ovector[1]:]
-	}
-	return append(r, bytes...)
-}
+//func (re Regexp) ReplaceAll(bytes, repl []byte, flags int) []byte {
+//	m := re.Matcher(bytes, 0)
+//	r := []byte{}
+//	for m.Match(bytes, flags) {
+//		//TODO pcre_copy_substring()
+//		r = append(append(r, bytes[:m.ovector[0]]...), repl...)
+//		bytes = bytes[m.ovector[1]:]
+//	}
+//	return append(r, bytes...)
+//}
 
 // A compilation error, as returned by the Compile function.  The
 // offset is the byte position in the pattern string at which the
