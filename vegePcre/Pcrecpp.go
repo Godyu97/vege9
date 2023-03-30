@@ -3,7 +3,7 @@ package vegePcre
 /*
 #cgo CXXFLAGS: -std=c++11
 #cgo LDFLAGS: -lpcre++ -lpcrecpp -lstdc++ -lmypcre
-#include <mypcre.h>
+#include "mypcre.h"
 */
 import "C"
 import (
