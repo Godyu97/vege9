@@ -1,8 +1,7 @@
 package vegePcre
 
 /*
- #cgo CFLAGS: -I.
- #cgo CXXFLAGS: -std=c++11  -I/usr/include
+ #cgo CFLAGS: -std=c++11  -I/usr/include/9/
  #cgo LDFLAGS:  -lmypcre -lpcre -lpcre++ -libstdc++
  #include "mypcre.h"
 */
