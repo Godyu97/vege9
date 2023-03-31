@@ -1,10 +1,13 @@
 package main
 
-// #cgo CPPFLAGS: -std=c++11 -I/usr/include/c++/9
-// #cgo LDFLAGS: -L. -ltest
-// void hello();
-import "C"
+import (
+	"github.com/Godyu97/vege9/vegePcre"
+	"log"
+)
 
 func main() {
-	C.hello()
+	str := "Hello (world)!"
+	replace_str := "<$1>"
+	patten := "\\((.*?)\\)"
+	log.Println(vegePcre.Replace(patten, replace_str, str))
 }
