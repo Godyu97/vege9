@@ -1,9 +1,9 @@
 package main
 
-import (
-	"github.com/Godyu97/vege9/vegePcre"
-)
+// #cgo LDFLAGS: -L. -lhello
+// void hello();
+import "C"
 
 func main() {
-	vegePcre.Replace("\\((.*?)\\)", "<\\1>", "Hello (world)!")
+	C.hello()
 }
