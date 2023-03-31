@@ -51,7 +51,7 @@ package vegePcre
 
 /*
 #cgo LDFLAGS: -lpcre
-#cgo CFLAGS: -I/opt/local/include
+#cgo CFLAGS: -I/usr/include
 #include <pcre.h>
 #include <string.h>
 */
