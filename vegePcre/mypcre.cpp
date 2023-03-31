@@ -1,14 +1,15 @@
 #ifndef MYPCRE_H
 #define MYPCRE_H
 
-#include <pcre++.h>
-
-#include <cstring>
-#include <iostream>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <pcre++.h>
+
+#include <cstring>
+#include <iostream>
 
 void Pcrepp_Replace(char* patten, char* repl, char* src) {
   pcrepp::Pcre re(patten);
