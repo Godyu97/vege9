@@ -1,6 +1,7 @@
 package main
 
-// #cgo LDFLAGS: -L. -lhello
+// #cgo CPPFLAGS: -std=c++11 -I/usr/include/c++/9
+// #cgo LDFLAGS: -L. -ltest
 // void hello();
 import "C"
 
