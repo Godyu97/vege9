@@ -1,7 +1,7 @@
 package vegePcre
 
 /*
- #cgo CXXFLAGS: -std=c++11  -I/usr/include/10
+ #cgo CPPFLAGS: -std=c++11  -I/usr/include/
  #cgo LDFLAGS:  -L/usr/include  -lpcre++ -lmypcre -lstdc++
  #include "mypcre.h"
 */
@@ -19,5 +19,5 @@ func Replace(pattern string, repl string, src string) string {
 	repl1 := C.CString(repl)
 	defer C.free(unsafe.Pointer(repl1))
 	C.Pcrepp_Replace(pattern1, repl1, src1)
-	return string(src1)
+	return C.GoString(src1)
 }
