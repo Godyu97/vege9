@@ -4,6 +4,7 @@ package vegePcre
  #cgo CXXFLAGS: -std=c++11 -I/usr/include/c++/9
  #cgo LDFLAGS:  -lstdc++ -lmypcre
  void Pcrepp_Replace(char* patten, char* repl, char* src);
+ #include "mypcre.h"
 */
 import "C"
 import (
