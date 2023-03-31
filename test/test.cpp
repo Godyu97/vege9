@@ -1,7 +1,8 @@
 #include <iostream>
-
+#include <string>
 extern "C" {
     void hello() {
-        std::cout << "Hello, world!" << std::endl;
+        std::string a="Hello, world!"
+        std::cout << a << std::endl;
     }
 }
