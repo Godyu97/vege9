@@ -269,34 +269,41 @@ void *_wrap_Swig_malloc_vegePcre_f83a3cf6dbc14c45(intgo _swig_go_0) {
 }
 
 
-void _wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(_gostring_ _swig_go_0, _gostring_ _swig_go_1, _gostring_ _swig_go_2) {
-  char *arg1 = (char *) 0 ;
-  char *arg2 = (char *) 0 ;
-  char **arg3 = 0 ;
-  char *temp3 ;
+std::string *_wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(std::string *_swig_go_0, std::string *_swig_go_1, std::string *_swig_go_2) {
+  std::string arg1 ;
+  std::string arg2 ;
+  std::string arg3 ;
+  std::string *argp1 ;
+  std::string *argp2 ;
+  std::string *argp3 ;
+  std::string result;
+  std::string *_swig_go_result;
   
   
-  arg1 = (char *)malloc(_swig_go_0.n + 1);
-  memcpy(arg1, _swig_go_0.p, _swig_go_0.n);
-  arg1[_swig_go_0.n] = '\0';
+  argp1 = (std::string *)_swig_go_0;
+  if (argp1 == NULL) {
+    _swig_gopanic("Attempt to dereference null std::string");
+  }
+  arg1 = (std::string)*argp1;
   
   
-  arg2 = (char *)malloc(_swig_go_1.n + 1);
-  memcpy(arg2, _swig_go_1.p, _swig_go_1.n);
-  arg2[_swig_go_1.n] = '\0';
+  argp2 = (std::string *)_swig_go_1;
+  if (argp2 == NULL) {
+    _swig_gopanic("Attempt to dereference null std::string");
+  }
+  arg2 = (std::string)*argp2;
   
   
-  temp3 = (char *)malloc(_swig_go_2.n + 1);
-  memcpy(temp3, _swig_go_2.p, _swig_go_2.n);
-  temp3[_swig_go_2.n] = '\0';
-  arg3 = (char **)&temp3;
+  argp3 = (std::string *)_swig_go_2;
+  if (argp3 == NULL) {
+    _swig_gopanic("Attempt to dereference null std::string");
+  }
+  arg3 = (std::string)*argp3;
   
   
-  Pcrepp_Replace(arg1,arg2,*arg3);
-  
-  free(arg1); 
-  free(arg2); 
-  free(arg3); 
+  result = Pcrepp_Replace(arg1,arg2,arg3);
+  *(std::string **)&_swig_go_result = new std::string(result); 
+  return _swig_go_result;
 }
 
 
