@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	str := "Hello (world)!"
-	replace_str := "<$1>"
+	str := "Hello (world)(hhhh)!"
+	replace_str := "<$2>"
 	patten := "\\((.*?)\\)"
-	log.Println(vegePcre.PcreppReplaceImpl(patten, replace_str, str))
+	log.Println(vegePcre.PcreppReplaceImpl(patten, replace_str, str, "sig"))
 }
