@@ -9,5 +9,5 @@ func main() {
 	str := "Hello (world)!"
 	replace_str := "<$1>"
 	patten := "\\((.*?)\\)"
-	log.Println(vegePcre.Replace(patten, replace_str, str))
+	log.Println(vegePcre.PcreppReplaceImpl(patten, replace_str, str))
 }
