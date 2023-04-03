@@ -5,10 +5,9 @@
 #include <cstring>
 #include <iostream>
 
-extern "C"{
-void Pcrepp_Replace(char* patten, char* repl, char*& src);
+extern "C" {
+std::string Pcrepp_Replace(std::string patten, std::string repl,
+                           std::string src);
 }
-
-
 
 #endif
