@@ -231,6 +231,15 @@ static void _swig_gopanic(const char *p) {
   if (!(expr)) { _swig_gopanic(msg); } else
 
 
+static _gostring_ Swig_AllocateString(const char *p, size_t l) {
+  _gostring_ ret;
+  ret.p = (char*)malloc(l);
+  memcpy(ret.p, p, l);
+  ret.n = l;
+  return ret;
+}
+
+
 static void Swig_free(void* p) {
   free(p);
 }
@@ -269,40 +278,34 @@ void *_wrap_Swig_malloc_vegePcre_f83a3cf6dbc14c45(intgo _swig_go_0) {
 }
 
 
-std::string *_wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(std::string *_swig_go_0, std::string *_swig_go_1, std::string *_swig_go_2) {
-  std::string arg1 ;
-  std::string arg2 ;
-  std::string arg3 ;
-  std::string *argp1 ;
-  std::string *argp2 ;
-  std::string *argp3 ;
-  std::string result;
-  std::string *_swig_go_result;
+_gostring_ _wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(_gostring_ _swig_go_0, _gostring_ _swig_go_1, _gostring_ _swig_go_2) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  char *result = 0 ;
+  _gostring_ _swig_go_result;
   
   
-  argp1 = (std::string *)_swig_go_0;
-  if (argp1 == NULL) {
-    _swig_gopanic("Attempt to dereference null std::string");
-  }
-  arg1 = (std::string)*argp1;
+  arg1 = (char *)malloc(_swig_go_0.n + 1);
+  memcpy(arg1, _swig_go_0.p, _swig_go_0.n);
+  arg1[_swig_go_0.n] = '\0';
   
   
-  argp2 = (std::string *)_swig_go_1;
-  if (argp2 == NULL) {
-    _swig_gopanic("Attempt to dereference null std::string");
-  }
-  arg2 = (std::string)*argp2;
+  arg2 = (char *)malloc(_swig_go_1.n + 1);
+  memcpy(arg2, _swig_go_1.p, _swig_go_1.n);
+  arg2[_swig_go_1.n] = '\0';
   
   
-  argp3 = (std::string *)_swig_go_2;
-  if (argp3 == NULL) {
-    _swig_gopanic("Attempt to dereference null std::string");
-  }
-  arg3 = (std::string)*argp3;
+  arg3 = (char *)malloc(_swig_go_2.n + 1);
+  memcpy(arg3, _swig_go_2.p, _swig_go_2.n);
+  arg3[_swig_go_2.n] = '\0';
   
   
-  result = Pcrepp_Replace(arg1,arg2,arg3);
-  *(std::string **)&_swig_go_result = new std::string(result); 
+  result = (char *)Pcrepp_Replace(arg1,arg2,arg3);
+  _swig_go_result = Swig_AllocateString((char*)result, result ? strlen((char*)result) : 0); 
+  free(arg1); 
+  free(arg2); 
+  free(arg3); 
   return _swig_go_result;
 }
 
