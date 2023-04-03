@@ -1,7 +1,9 @@
 #include "mypcre.h"
 
-std::string Pcrepp_Replace(std::string patten, std::string repl,
-                           std::string src) {
+char* Pcrepp_Replace(char* patten, char* repl, char* src) {
   pcrepp::Pcre re(patten);
-  return re.replace(src, repl);
+  std::string res = re.replace(std::string(src), std::string(repl));
+  char* result = new char[res.size() + 1];
+  std::strcpy(result, res.c_str());
+  return result;
 }

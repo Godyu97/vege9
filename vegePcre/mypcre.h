@@ -6,8 +6,7 @@
 #include <iostream>
 
 extern "C" {
-std::string Pcrepp_Replace(std::string patten, std::string repl,
-                           std::string src);
+char* Pcrepp_Replace(char* patten, char* repl, char* src);
 }
 
 #endif
