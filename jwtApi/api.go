@@ -26,6 +26,29 @@ func (j *JwtCfg) SignedTokenStr(data any) (string, error) {
 
 }
 
+// SignedTokenStrWithID
+// 签发jwt token with ID
+func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
+	c := MyClaims{
+		data,
+		jwt.RegisteredClaims{},
+	}
+	if j.TokenExpireDuration != 0 {
+		c.ExpiresAt = &jwt.NumericDate{time.Now().Add(j.TokenExpireDuration)}
+	}
+	if j.Issuer != "" {
+		c.Issuer = j.Issuer
+	}
+	if id != "" {
+		c.ID = id
+	}
+	//使用指定的签名方法创建签名对象
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
+	//使用指定的secret签名并获得完成的编码后的字符串token
+	return token.SignedString([]byte(j.Key))
+
+}
+
 // ParseToken
 // 解析 jwt token
 func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {

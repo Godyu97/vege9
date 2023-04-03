@@ -5,8 +5,8 @@ import (
 )
 
 type JwtCfg struct {
-	Key                 string
-	TokenExpireDuration time.Duration
+	Key                 string        //密钥
+	TokenExpireDuration time.Duration //默认为永不过期
 	Issuer              string
 }
 
