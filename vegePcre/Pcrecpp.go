@@ -4,6 +4,7 @@ package vegePcre
  #cgo CPPFLAGS: -std=c++11  -I/usr/include/
  #cgo LDFLAGS:  -L/usr/include  -lpcre++ -lmypcre -lstdc++
  #include "mypcre.h"
+ #include "string.h"
 */
 import "C"
 
