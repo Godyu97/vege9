@@ -17,18 +17,22 @@ var jwtObj *jwtApi.JwtCfg
 // SetJwtObj
 // 只允许调用一次
 func SetJwtObj(obj *jwtApi.JwtCfg) {
-	if obj != nil {
-		jwtObj = obj
+	if jwtObj != nil {
+		panic("GWnRffXb1 SetJwtObj has run")
 	}
+	if obj == nil {
+		panic("GWnRffXb2 SetJwtObj obj nil")
+	}
+	jwtObj = obj
 }
 
 // JWTAuthMiddleware
 // 基于JWT认证中间件
 func JWTAuthMiddleware() gin.HandlerFunc {
+	if jwtObj == nil {
+		panic("WsHcGnaO please SetJwtObj first")
+	}
 	return func(c *gin.Context) {
-		if jwtObj == nil {
-			panic("WsHcGnaO please init jwtObj")
-		}
 		cookie, err := c.Request.Cookie(JwtCookieKey)
 		if err != nil {
 			// Set jwt Err
@@ -46,7 +50,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 }
 
 // GetMcFromCtx
-// 从上下文取得 mc obj
+// 从ctx取得 mc
 func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
 	t, ok := ctx.Get(JwtCtxMcKey)
 	if !ok {
@@ -54,4 +58,18 @@ func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
 	}
 	mc = t.(*jwtApi.MyClaims)
 	return mc, nil
+}
+
+// GetTokenObjFromCtx
+// form ctx 取得 mc 并且将token JsonUnmarshal 到obj中，要求obj为对象地址
+func GetTokenObjFromCtx(ctx *gin.Context, obj any) error {
+	mc, err := GetMcFromCtx(ctx)
+	if err != nil {
+		return err
+	}
+	err = mc.TokenObj(obj)
+	if err != nil {
+		return err
+	}
+	return nil
 }

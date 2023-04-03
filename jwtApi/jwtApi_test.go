@@ -1,26 +1,26 @@
 package jwtApi
 
 import (
-	"github.com/Godyu97/vege9/vegeTools"
 	"testing"
 	"time"
 )
 
+type TestUser struct {
+	Id    string
+	Name  string
+	Phone string
+}
+
 func TestJwt(t *testing.T) {
-	key := "godyu"
+	key := "RPJbreTM"
 	jwtObj := InitJwt(key,
-		WithIssuer("hongyu"),
+		WithIssuer("TestJwt"),
 		WithExp(time.Hour),
 	)
-	type user struct {
-		Id    string
-		Name  string
-		Phone string
-	}
-	u := user{
+	u := TestUser{
 		Id:    "0001",
 		Name:  "hongyu",
-		Phone: "133",
+		Phone: "133344445555",
 	}
 	token, err := jwtObj.SignedTokenStr(u)
 	if err != nil {
@@ -28,17 +28,17 @@ func TestJwt(t *testing.T) {
 		return
 	}
 	t.Log(token)
-	parseToken, err := jwtObj.ParseToken(token)
+	mc, err := jwtObj.ParseToken(token)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	a := &user{}
-	err = vegeTools.MapToObj(parseToken.AuthData.(map[string]interface{}), a)
+	a := &TestUser{}
+	err = mc.TokenObj(a)
 	if err != nil {
 		t.Error(err)
 		return
 	}
 	t.Log(a)
-	t.Log(parseToken)
+	t.Log(mc)
 }

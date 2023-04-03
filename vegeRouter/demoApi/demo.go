@@ -20,6 +20,6 @@ func (a Api) DemoPostFn(ctx *gin.Context, req *DemoPostFnReq) (resp *DemoPostFnR
 		panic(err)
 	}
 	//resp token obj json
-	resp.Data, _ = vegeTools.JsonMarshalToString(mc.AuthData)
+	resp.Data, _ = vegeTools.JsonMarshalToString(mc.Token)
 	return resp, nil
 }

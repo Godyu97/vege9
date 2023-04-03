@@ -11,15 +11,14 @@ import (
 )
 
 func InitHttpDemo(r *gin.Engine) {
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/Ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "Pong pong pong",
 		})
 	})
-
 	auth := r.Group("/auth")
 	midware.SetJwtObj(
-		jwtApi.InitJwt("godyu",
+		jwtApi.InitJwt("HQoiqrNg",
 			jwtApi.WithExp(time.Hour),
 			jwtApi.WithIssuer("hongyu"),
 		))

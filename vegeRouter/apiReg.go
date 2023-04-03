@@ -9,7 +9,7 @@ type Apier interface {
 	//200
 	SendOk(c *gin.Context, body any)
 	//500
-	SendBad(c *gin.Context, message string, body any)
+	SendBad(c *gin.Context, errMsg string, body any)
 	//401
 	CheckAuth(c *gin.Context, body any) error
 }
@@ -18,7 +18,12 @@ type Apier interface {
 // 根据*uri执行对应方法
 func RegApiHandler(bind Apier) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		methodName := ctx.Param("uri")[1:]
+		uri := ctx.Param("uri")
+		if len(uri) < 2 {
+			bind.SendBad(ctx, "afdmWYon uir解析失败，请访问正确的路径", nil)
+			return
+		}
+		methodName := uri[1:]
 		body, err := io.ReadAll(ctx.Request.Body)
 		if err != nil {
 			bind.SendBad(ctx, err.Error(), nil)

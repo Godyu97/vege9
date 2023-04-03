@@ -2,14 +2,7 @@ package jwtApi
 
 import (
 	"time"
-
-	"github.com/golang-jwt/jwt/v5"
 )
-
-type MyClaims struct {
-	AuthData interface{}
-	jwt.RegisteredClaims
-}
 
 type JwtCfg struct {
 	Key                 string
@@ -21,8 +14,8 @@ type OptionFunc func(cfg *JwtCfg)
 
 // InitJwt
 // 初始化jwt管理器
-func InitJwt(secret string, opts ...OptionFunc) *JwtCfg {
-	o := &JwtCfg{Key: secret}
+func InitJwt(key string, opts ...OptionFunc) *JwtCfg {
+	o := &JwtCfg{Key: key}
 	for _, opt := range opts {
 		opt(o)
 	}

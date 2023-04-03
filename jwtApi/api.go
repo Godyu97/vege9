@@ -8,7 +8,7 @@ import (
 
 // SignedTokenStr
 // 签发jwt token
-func (j *JwtCfg) SignedTokenStr(data interface{}) (string, error) {
+func (j *JwtCfg) SignedTokenStr(data any) (string, error) {
 	c := MyClaims{
 		data,
 		jwt.RegisteredClaims{},

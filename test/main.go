@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegePcre"
-	"log"
+	"github.com/Godyu97/vege9/vegeRouter/demoApi"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	str := "Hello (world)(hhhh)!"
-	replace_str := "<$2>"
-	patten := "\\((.*?)\\)"
-	log.Println(vegePcre.PcreppReplaceImpl(patten, replace_str, str, "sig"))
+	mux := gin.Default()
+	demoApi.InitHttpDemo(mux)
+	mux.Run(":10928")
 }
