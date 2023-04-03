@@ -278,10 +278,11 @@ void *_wrap_Swig_malloc_vegePcre_f83a3cf6dbc14c45(intgo _swig_go_0) {
 }
 
 
-_gostring_ _wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(_gostring_ _swig_go_0, _gostring_ _swig_go_1, _gostring_ _swig_go_2) {
+_gostring_ _wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(_gostring_ _swig_go_0, _gostring_ _swig_go_1, _gostring_ _swig_go_2, _gostring_ _swig_go_3) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
   char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
   char *result = 0 ;
   _gostring_ _swig_go_result;
   
@@ -301,11 +302,17 @@ _gostring_ _wrap_Pcrepp_Replace_vegePcre_f83a3cf6dbc14c45(_gostring_ _swig_go_0,
   arg3[_swig_go_2.n] = '\0';
   
   
-  result = (char *)Pcrepp_Replace(arg1,arg2,arg3);
+  arg4 = (char *)malloc(_swig_go_3.n + 1);
+  memcpy(arg4, _swig_go_3.p, _swig_go_3.n);
+  arg4[_swig_go_3.n] = '\0';
+  
+  
+  result = (char *)Pcrepp_Replace(arg1,arg2,arg3,arg4);
   _swig_go_result = Swig_AllocateString((char*)result, result ? strlen((char*)result) : 0); 
   free(arg1); 
   free(arg2); 
   free(arg3); 
+  free(arg4); 
   return _swig_go_result;
 }
 
