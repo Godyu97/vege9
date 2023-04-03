@@ -14,7 +14,7 @@ package vegePcre
 
 /*
 #cgo LDFLAGS: -lpcre++
-#cgo CPPFLAGS: -std=c++11 -I/usr/include
+#cgo CFLAGS:  -I/usr/include
 
 #define intgo swig_intgo
 typedef void *swig_voidp;
@@ -46,26 +46,28 @@ import "unsafe"
 import _ "runtime/cgo"
 import "sync"
 
+
 type _ unsafe.Pointer
+
+
 
 var Swig_escape_always_false bool
 var Swig_escape_val interface{}
 
+
 type _swig_fnptr *byte
 type _swig_memberptr *byte
 
+
 type _ sync.Mutex
 
-type swig_gostring struct {
-	p uintptr
-	n int
-}
 
+type swig_gostring struct { p uintptr; n int }
 func swigCopyString(s string) string {
-	p := *(*swig_gostring)(unsafe.Pointer(&s))
-	r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
-	Swig_free(p.p)
-	return r
+  p := *(*swig_gostring)(unsafe.Pointer(&s))
+  r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
+  Swig_free(p.p)
+  return r
 }
 
 func Swig_free(arg1 uintptr) {
@@ -97,6 +99,8 @@ func Pcrepp_Replace(arg1 string, arg2 string, arg3 string) (_swig_ret string) {
 		Swig_escape_val = arg3
 	}
 	var swig_r_1 string
-	swig_r_1 = swigCopyString(swig_r)
+ swig_r_1 = swigCopyString(swig_r) 
 	return swig_r_1
 }
+
+
