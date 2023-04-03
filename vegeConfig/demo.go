@@ -5,6 +5,7 @@ import (
 )
 
 type Cfg struct {
+	DSN string
 }
 
 var cfgObj *Cfg
@@ -19,7 +20,8 @@ func GetCfg() Cfg {
 	}
 }
 
-func InitYamlCfg(path string, file string) {
+// unmarshal cfg obj pointer
+func InitYamlCfg(path string, file string, obj any) {
 	v := viper.New()
 	//path
 	v.AddConfigPath(path)
@@ -31,13 +33,13 @@ func InitYamlCfg(path string, file string) {
 	if err := v.ReadInConfig(); err != nil {
 		panic(err)
 	}
-	cfgObj = new(Cfg)
-	if err := v.Unmarshal(&cfgObj); err != nil {
+	if err := v.Unmarshal(obj); err != nil {
 		panic(err)
 	}
 }
 
-func InitJsonCfg(path string, file string) {
+// unmarshal cfg obj pointer
+func InitJsonCfg(path string, file string, obj any) {
 	v := viper.New()
 	//path
 	v.AddConfigPath(path)
@@ -49,8 +51,7 @@ func InitJsonCfg(path string, file string) {
 	if err := v.ReadInConfig(); err != nil {
 		panic(err)
 	}
-	cfgObj = new(Cfg)
-	if err := v.Unmarshal(&cfgObj); err != nil {
+	if err := v.Unmarshal(obj); err != nil {
 		panic(err)
 	}
 }
