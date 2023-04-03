@@ -5,8 +5,10 @@
 #include <cstring>
 #include <iostream>
 
-
+extern "C"{
 void Pcrepp_Replace(char* patten, char* repl, char*& src);
+}
+
 
 
 #endif

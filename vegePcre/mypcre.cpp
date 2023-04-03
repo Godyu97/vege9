@@ -1,7 +1,7 @@
 
-extern "C"{
+
 #include "mypcre.h"
-}
+
 
 void Pcrepp_Replace(char* patten, char* repl, char*& src) {
   pcrepp::Pcre re(patten);
