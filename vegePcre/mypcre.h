@@ -3,6 +3,7 @@
 #include <pcre++.h>
 
 #include <cstring>
+#include <exception>
 #include <iostream>
 
 extern "C" {
