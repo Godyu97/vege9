@@ -1,5 +1,5 @@
-%module mypcre
+%module vegePcre
 %{
-#include "mypcre.h"
-}%
+    #include "mypcre.h"
+%}
 %include "mypcre.h"
