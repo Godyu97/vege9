@@ -7,7 +7,7 @@
 #include <iostream>
 
 extern "C" {
-char* Pcrepp_Replace(char* patten, char* repl, char* src);
+char* Pcrepp_Replace(char* patten, char* repl, char* src, char* flags);
 }
 
 #endif
