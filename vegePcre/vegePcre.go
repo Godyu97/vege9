@@ -14,7 +14,7 @@ package vegePcre
 
 /*
 #cgo LDFLAGS: -lpcre++
-#cgo CFLAGS: -std=c++11 -I/usr/include
+#cgo CPPFLAGS: -std=c++11 -I/usr/include
 
 #define intgo swig_intgo
 typedef void *swig_voidp;
