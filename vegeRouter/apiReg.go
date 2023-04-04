@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-type Apier interface {
+type Register interface {
 	//200
 	SendOk(c *gin.Context, body any)
 	//500
@@ -16,7 +16,7 @@ type Apier interface {
 
 // RegApiHandler
 // 根据*uri执行对应方法
-func RegApiHandler(bind Apier) gin.HandlerFunc {
+func RegApiHandler(bind Register) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		uri := ctx.Param("uri")
 		if len(uri) < 2 {
