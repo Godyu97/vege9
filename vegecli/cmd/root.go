@@ -16,7 +16,7 @@ const (
 	Cmd_localip  = "localip"  //udp 得到 local ip
 	Cmd_netinter = "netinter" //网卡上的全部 ip
 	Cmd_ipsb     = "ipsb"     //curl ip.sb
-	Cmd_hmacsha2 = "hmacsha2" //计算hmac sha2的hash值
+	Cmd_hash     = "hash"     //计算hmac sha2的hash值
 )
 
 var cmdL = []string{
@@ -24,7 +24,7 @@ var cmdL = []string{
 	Cmd_localip,
 	Cmd_netinter,
 	Cmd_ipsb,
-	Cmd_hmacsha2,
+	Cmd_hash,
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -70,7 +70,7 @@ to quickly create a Cobra application.`,
 			case Cmd_ipsb:
 				ipsb()
 				return
-			case Cmd_hmacsha2:
+			case Cmd_hash:
 				hmacsha2(args, argn)
 				return
 			default:
