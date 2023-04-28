@@ -2,5 +2,5 @@
 * vege tools code helper pkg
 using
 ```go 
-    go get -u github.com/Godyu97/vege9
+    go get -u github.com/Godyu97/vege9@latest
 ```
