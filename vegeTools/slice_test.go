@@ -25,3 +25,11 @@ func TestSliceIsInSlice(t *testing.T) {
 		t.Error("SliceIsInSlice failed")
 	}
 }
+
+func TestSliceUnique(t *testing.T) {
+	g := SliceUnique([]string{"1", "2", "3", "4", "5", "1", "2", "6"})
+	w := []string{"1", "2", "3", "4", "5", "6"}
+	if !SliceEqual(g, w) {
+		t.Error("failed~~~")
+	}
+}
