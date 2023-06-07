@@ -10,36 +10,40 @@ import (
 )
 
 const (
-	SendOk    = "SendOk"
-	SendBad   = "SendBad"
-	CheckAuth = "CheckAuth"
+	SendOk      = "SendOk"
+	SendBad     = "SendBad"
+	CheckAuth   = "CheckAuth"
+	UriToFnName = "UriToFnName"
 )
 
-func Call(ctx context.Context, service interface{}, methodName string, request string) (response interface{}, err error) {
-	if methodName == SendOk || methodName == SendBad || methodName == CheckAuth {
+func Call(ctx context.Context, service any, methodName string, request []byte) (response any, err error) {
+	if methodName == SendOk ||
+		methodName == SendBad ||
+		methodName == CheckAuth ||
+		methodName == UriToFnName {
 		return "",
-			errors.New("YdNRJNuJ 非可用的api")
+			errors.New("YdNRJNuJ Invalid api")
 	}
 
 	method, ok := reflect.TypeOf(service).MethodByName(methodName)
 	if !ok {
 		return "",
-			errors.New(fmt.Sprintf("YdNRJNuJ %s not find", methodName))
+			errors.New(fmt.Sprintf("pWbvMQYt %s not find", methodName))
 	}
 
 	// NumIn() : apiObj , *gin.Context, *req
 	// NumOut(): *resp err
 	if method.Type.NumIn() != 3 || method.Type.NumOut() != 2 {
 		return "",
-			errors.New(fmt.Sprintf("fwxbKFmo 非可用的api"))
+			errors.New("fwxbKFmo Invalid api")
 	}
 	parameter := method.Type.In(2)
 	req := reflect.New(parameter.Elem()).Interface()
 	if len(request) != 0 {
-		err = vegeTools.JsonUnmarshalFromString(request, req)
+		err = vegeTools.JsonUnmarshal(request, req)
 		if err != nil {
 			return "",
-				errors.New("bcCggifz req 解析错误")
+				errors.New(fmt.Sprintf("bcCggifz req json unmarshal failed err:%s", err))
 		}
 	}
 	in := make([]reflect.Value, 0, 2)

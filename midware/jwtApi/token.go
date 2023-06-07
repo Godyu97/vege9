@@ -10,6 +10,7 @@ type MyClaims struct {
 	jwt.RegisteredClaims
 }
 
+// obj 为指针，内部实现为json unmarshal
 func (mc *MyClaims) TokenObj(obj any) error {
 	return vegeTools.MapToObj(mc.Token.(map[string]any), obj)
 }

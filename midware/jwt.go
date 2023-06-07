@@ -2,57 +2,55 @@ package midware
 
 import (
 	"errors"
-	"github.com/Godyu97/vege9/jwtApi"
+	"github.com/Godyu97/vege9/midware/jwtApi"
 	"github.com/gin-gonic/gin"
+	"sync"
 )
 
 const (
-	JwtCookieKey = "VegeJwtToken"
-	JwtCtxErrKey = "VegeJwtCtxErr"
-	JwtCtxMcKey  = "VegeJwtCtxMc"
+	JwtCookieKey = "Vege9JwtToken"
+	JwtCtxErrKey = "Vege9JwtCtxErr"
+	JwtCtxMcKey  = "Vege9JwtCtxMc"
 )
 
-var jwtObj *jwtApi.JwtCfg
+type JwtReq struct {
+	JwtObj    *jwtApi.JwtCfg
+	JwtCtxKey CtxKey
+}
 
-// SetJwtObj
-// 只允许调用一次
-func SetJwtObj(obj *jwtApi.JwtCfg) {
-	if jwtObj != nil {
-		panic("GWnRffXb1 SetJwtObj has run")
-	}
-	if obj == nil {
-		panic("GWnRffXb2 SetJwtObj obj nil")
-	}
-	jwtObj = obj
+type CtxKey struct {
+	JwtCookieKey string
+	JwtCtxErrKey string
+	JwtCtxMcKey  string
 }
 
 // JWTAuthMiddleware
 // 基于JWT认证中间件
-func JWTAuthMiddleware() gin.HandlerFunc {
-	if jwtObj == nil {
-		panic("WsHcGnaO please SetJwtObj first")
+func JWTAuthMiddleware(req JwtReq) gin.HandlerFunc {
+	if req.JwtObj == nil {
+		panic("WsHcGnaO please req.JwtObj is nil")
 	}
 	return func(c *gin.Context) {
-		cookie, err := c.Request.Cookie(JwtCookieKey)
+		cookie, err := c.Request.Cookie(req.JwtCtxKey.JwtCookieKey)
 		if err != nil {
 			// Set jwt Err
-			c.Set(JwtCtxErrKey, err)
+			c.Set(req.JwtCtxKey.JwtCtxErrKey, err)
 			return
 		}
-		mc, err := jwtObj.ParseToken(cookie.Value)
+		mc, err := req.JwtObj.ParseToken(cookie.Value)
 		if err != nil {
-			c.Set(JwtCtxErrKey, err)
+			c.Set(req.JwtCtxKey.JwtCtxErrKey, err)
 			return
 		}
 		//后续的处理函数可以通过c.Get("JwtCtxMcKey")来获取请求的用户信息
-		c.Set(JwtCtxMcKey, mc)
+		c.Set(req.JwtCtxKey.JwtCtxMcKey, mc)
 	}
 }
 
 // GetMcFromCtx
 // 从ctx取得 mc
-func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
-	t, ok := ctx.Get(JwtCtxMcKey)
+func GetMcFromCtx(ctx *gin.Context, req JwtReq) (mc *jwtApi.MyClaims, err error) {
+	t, ok := ctx.Get(req.JwtCtxKey.JwtCtxMcKey)
 	if !ok {
 		return nil, errors.New("hLrtXLod JwtCtxMcKey not exists")
 	}
@@ -62,8 +60,8 @@ func GetMcFromCtx(ctx *gin.Context) (mc *jwtApi.MyClaims, err error) {
 
 // GetTokenObjFromCtx
 // form ctx 取得 mc 并且将token JsonUnmarshal 到obj中，要求obj为对象地址
-func GetTokenObjFromCtx(ctx *gin.Context, obj any) error {
-	mc, err := GetMcFromCtx(ctx)
+func GetTokenObjFromCtx(ctx *gin.Context, req JwtReq, obj any) error {
+	mc, err := GetMcFromCtx(ctx, req)
 	if err != nil {
 		return err
 	}
@@ -72,4 +70,24 @@ func GetTokenObjFromCtx(ctx *gin.Context, obj any) error {
 		return err
 	}
 	return nil
+}
+
+// 单例模式
+var jwtObj *jwtApi.JwtCfg
+var setOnce sync.Once
+
+func InitJwtObj(obj *jwtApi.JwtCfg) {
+	if obj == nil {
+		panic("GWnRffXb2 InitJwtObj obj nil")
+	}
+	setOnce.Do(func() {
+		jwtObj = obj
+	})
+}
+
+func GetJwtObj() *jwtApi.JwtCfg {
+	if jwtObj != nil {
+		return jwtObj
+	}
+	panic("IsRzQnTh please InitJwtObj first")
 }
