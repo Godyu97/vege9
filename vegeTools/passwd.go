@@ -55,6 +55,64 @@ func RandBytesMask(n int) []byte {
 	return b
 }
 
+const codeBytes = "0123456789"
+
+func RandCodeMask(n int) string {
+	b := new(strings.Builder)
+	b.Grow(n)
+	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(codeBytes) {
+			b.WriteByte(codeBytes[idx])
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+	return b.String()
+}
+
+const idBytes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func RandIdMask(n int) string {
+	b := new(strings.Builder)
+	b.Grow(n)
+	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(idBytes) {
+			b.WriteByte(idBytes[idx])
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+	return b.String()
+}
+
+func RandSelfDefMask(n int, bs string) string {
+	b := new(strings.Builder)
+	b.Grow(n)
+	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(bs) {
+			b.WriteByte(bs[idx])
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+	return b.String()
+}
+
 // HashBySalt
 // hmac sha2 and salt make hash
 func HashBySalt(ps, salt string) string {

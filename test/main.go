@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeRouter/demoApi"
-	"github.com/gin-gonic/gin"
+	"github.com/Godyu97/vege9/vegeTools"
+	"log"
+	"time"
 )
 
 func main() {
-	mux := gin.Default()
-	demoApi.InitHttpDemo(mux)
-	mux.Run(":10928")
+	for {
+		log.Println(vegeTools.RandSelfDefMask(8, "0123456789abcdefghijklmnopqrstuvwxyz"))
+		time.Sleep(time.Second)
+	}
 }
