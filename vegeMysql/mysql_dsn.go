@@ -18,14 +18,17 @@ type MysqlDSN struct {
 	Params   map[string]string
 }
 
+var DefaultParams = map[string]string{
+	"charset":   "utf8mb4",
+	"parseTime": "True",
+	"loc":       "Local",
+}
+
 type MysqlDsnOptionFunc func(dsn *MysqlDSN)
 
-func NewDefaultMysqlDsn(ops ...MysqlDsnOptionFunc) *MysqlDSN {
-	m := make(map[string]string)
-	m["charset"] = "utf8mb4"
-	m["parseTime"] = "True"
+func NewDefaultMysqlDsn(params map[string]string, ops ...MysqlDsnOptionFunc) *MysqlDSN {
 	obj := new(MysqlDSN)
-	obj.Params = m
+	obj.Params = params
 	obj.Protocol = "tcp"
 	for _, op := range ops {
 		op(obj)
