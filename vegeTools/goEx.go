@@ -20,3 +20,12 @@ func CostTimeDur(fn func()) time.Duration {
 	fn()
 	return time.Since(t)
 }
+
+// 比较old new,相等返回类型零值，不相等返回new
+func DiffField[T comparable](o, n T) (t T) {
+	if o == n {
+		return
+	} else {
+		return n
+	}
+}
