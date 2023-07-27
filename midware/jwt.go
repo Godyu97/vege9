@@ -7,19 +7,13 @@ import (
 	"sync"
 )
 
-const (
-	JwtCookieKey = "Vege9JwtToken"
-	JwtCtxErrKey = "Vege9JwtCtxErr"
-	JwtCtxMcKey  = "Vege9JwtCtxMc"
-)
-
 type JwtReq struct {
-	JwtObj    *jwtApi.JwtCfg
-	JwtCtxKey CtxKey
+	JwtObj *jwtApi.JwtCfg
+	JwtCtx CtxKey
 }
 
 type CtxKey struct {
-	JwtCookieKey string
+	JwtHeaderKey string
 	JwtCtxErrKey string
 	JwtCtxMcKey  string
 }
@@ -28,34 +22,38 @@ type CtxKey struct {
 // 基于JWT认证中间件
 func JWTAuthMiddleware(req JwtReq) gin.HandlerFunc {
 	if req.JwtObj == nil {
-		panic("WsHcGnaO please req.JwtObj is nil")
+		panic("WsHcGnaO req.JwtObj is nil")
 	}
 	return func(c *gin.Context) {
-		cookie, err := c.Request.Cookie(req.JwtCtxKey.JwtCookieKey)
+		jwtStr := c.Request.Header.Get(req.JwtCtx.JwtHeaderKey)
+		mc, err := req.JwtObj.ParseToken(jwtStr)
 		if err != nil {
-			// Set jwt Err
-			c.Set(req.JwtCtxKey.JwtCtxErrKey, err)
-			return
-		}
-		mc, err := req.JwtObj.ParseToken(cookie.Value)
-		if err != nil {
-			c.Set(req.JwtCtxKey.JwtCtxErrKey, err)
+			c.Set(req.JwtCtx.JwtCtxErrKey, err)
 			return
 		}
 		//后续的处理函数可以通过c.Get("JwtCtxMcKey")来获取请求的用户信息
-		c.Set(req.JwtCtxKey.JwtCtxMcKey, mc)
+		c.Set(req.JwtCtx.JwtCtxMcKey, mc)
 	}
 }
 
 // GetMcFromCtx
 // 从ctx取得 mc
 func GetMcFromCtx(ctx *gin.Context, req JwtReq) (mc *jwtApi.MyClaims, err error) {
-	t, ok := ctx.Get(req.JwtCtxKey.JwtCtxMcKey)
+	t, ok := ctx.Get(req.JwtCtx.JwtCtxMcKey)
 	if !ok {
 		return nil, errors.New("hLrtXLod JwtCtxMcKey not exists")
 	}
 	mc = t.(*jwtApi.MyClaims)
 	return mc, nil
+}
+
+// 从ctx取得JwtCtxErrKey
+func GetJwtErrFromCtx(ctx *gin.Context, req JwtReq) error {
+	err, ok := ctx.Get(req.JwtCtx.JwtCtxErrKey)
+	if !ok {
+		return nil
+	}
+	return err.(error)
 }
 
 // GetTokenObjFromCtx

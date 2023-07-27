@@ -5,7 +5,7 @@ import (
 )
 
 type JwtCfg struct {
-	Key                 string        //密钥
+	key                 string        //密钥
 	TokenExpireDuration time.Duration //默认为永不过期
 	Issuer              string
 }
@@ -15,7 +15,7 @@ type OptionFunc func(cfg *JwtCfg)
 // InitJwt
 // 初始化jwt管理器
 func InitJwt(key string, opts ...OptionFunc) *JwtCfg {
-	o := &JwtCfg{Key: key}
+	o := &JwtCfg{key: key}
 	for _, opt := range opts {
 		opt(o)
 	}

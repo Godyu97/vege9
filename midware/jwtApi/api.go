@@ -22,7 +22,7 @@ func (j *JwtCfg) SignedTokenStr(data any) (string, error) {
 	//使用指定的签名方法创建签名对象
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
 	//使用指定的secret签名并获得完成的编码后的字符串token
-	return token.SignedString([]byte(j.Key))
+	return token.SignedString([]byte(j.key))
 
 }
 
@@ -45,7 +45,7 @@ func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
 	//使用指定的签名方法创建签名对象
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
 	//使用指定的secret签名并获得完成的编码后的字符串token
-	return token.SignedString([]byte(j.Key))
+	return token.SignedString([]byte(j.key))
 
 }
 
@@ -54,7 +54,7 @@ func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
 func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {
 	//解析token
 	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (i interface{}, err error) {
-		return []byte(j.Key), nil
+		return []byte(j.key), nil
 	})
 	if err != nil {
 		return nil, err
