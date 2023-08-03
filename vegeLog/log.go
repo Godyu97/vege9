@@ -68,3 +68,11 @@ func getEncoder() zapcore.Encoder {
 	// NewConsoleEncoder 打印更符合人们观察的方式
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
+
+// 为其他组件提供logger接口
+func GetZapLogger() *zap.Logger {
+	if logger != nil {
+		return logger
+	}
+	panic("InitLogger first")
+}
