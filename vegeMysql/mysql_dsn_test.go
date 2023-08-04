@@ -10,6 +10,7 @@ func TestMysqlDSN(t *testing.T) {
 	parseDSN := ParseMysqlDSN(dsn)
 	fmt.Printf("%#v", parseDSN)
 	newDns := NewDefaultMysqlDsn(
+		DefaultParams,
 		WithAuth("user", "password"),
 		WithAddress("127.0.0.1:3306"),
 		WithDatabase("sql_test"),
