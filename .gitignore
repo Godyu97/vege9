@@ -16,6 +16,8 @@
 
 # .idea config
 .idea/
+# .vscode config
+.vscode/
 # log file
 *.log
 # build dir

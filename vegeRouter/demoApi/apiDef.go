@@ -36,7 +36,7 @@ const CheckAuthErrMsg = "权限不足2333"
 
 func (a Api) CheckAuth(c *gin.Context) error {
 	//return nil
-	if e, exist := c.Get(JwtDefaultReq.JwtCtxKey.JwtCtxErrKey); exist {
+	if e, exist := c.Get(JwtDefaultReq.JwtCtx.JwtCtxErrKey); exist {
 		err := errors.New(fmt.Sprintf("err:%s %s", CheckAuthErrMsg, e))
 		resp := ApiResp{
 			Err:  err.Error(),
