@@ -34,10 +34,10 @@ func InitHttpDemo(r *gin.Engine) {
 		))
 	JwtDefaultReq = midware.JwtReq{
 		JwtObj: midware.GetJwtObj(),
-		JwtCtxKey: midware.CtxKey{
-			JwtCookieKey: midware.JwtCookieKey,
-			JwtCtxErrKey: midware.JwtCtxErrKey,
-			JwtCtxMcKey:  midware.JwtCtxMcKey,
+		JwtCtx: midware.CtxKey{
+			JwtHeaderKey: "Authorization",
+			JwtCtxErrKey: "Vege9AcJwtErr",
+			JwtCtxMcKey:  "Vege9AcJwtMc",
 		},
 	}
 	auth.Use(midware.JWTAuthMiddleware(JwtDefaultReq))
