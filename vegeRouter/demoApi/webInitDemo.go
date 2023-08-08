@@ -40,7 +40,8 @@ func InitHttpDemo(r *gin.Engine) {
 			JwtCtxMcKey:  "Vege9AcJwtMc",
 		},
 	}
-	auth.Use(midware.JWTAuthMiddleware(JwtDefaultReq))
+	//auth.Use(midware.JWTAuthMiddleware(JwtDefaultReq))
 	//reg Api
+	auth.GET(vegeRouter.PathUri, vegeRouter.RegApiHandler(ApiObj))
 	auth.POST(vegeRouter.PathUri, vegeRouter.RegApiHandler(ApiObj))
 }

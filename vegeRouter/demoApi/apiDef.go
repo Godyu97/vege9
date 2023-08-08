@@ -1,33 +1,67 @@
 package demoApi
 
 import (
-	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+type WebError struct {
+	code   string
+	errMsg string
+}
+
+func (err *WebError) Error() string {
+	if err != nil {
+		return err.errMsg
+	}
+	return ""
+}
+
+func (err *WebError) Code() string {
+	if err != nil {
+		return err.code
+	}
+	return ""
+}
+
+func GetWebMsgCode(errMsg string) string {
+	return errCodeM[errMsg]
+}
+
+func GetWebErrorFromErrMsg(errMsg string) *WebError {
+	return &WebError{
+		code:   GetWebMsgCode(errMsg),
+		errMsg: errMsg,
+	}
+}
+
+var errCodeM = map[string]string{
+	//	todo 定义错误码
+}
+
 type Api struct {
 	UriToFnNameM map[string]string
 }
 
+// 所有200 的接口 resp 为ApiResp
 type ApiResp struct {
-	Err  string `json:"Err"`
-	Body any    `json:"Body"`
+	Code string `json:"code"`
+	Msg  string `json:"msg"`
+	Data any    `json:"data,omitempty" swaggerignore:"true"`
 }
 
 func (a Api) SendOk(c *gin.Context, body any) {
-	resp := ApiResp{
-		Err:  "",
-		Body: body,
-	}
-	c.JSON(http.StatusOK, resp)
+	c.JSON(http.StatusOK, body)
 }
 
 func (a Api) SendBad(c *gin.Context, errMsg string) {
+	//judge Code
+	err := GetWebErrorFromErrMsg(errMsg)
 	resp := ApiResp{
-		Err:  errMsg,
-		Body: nil,
+		Code: err.Code(),
+		Msg:  err.Error(),
+		Data: nil,
 	}
 	c.AbortWithStatusJSON(http.StatusInternalServerError, resp)
 }
@@ -37,10 +71,12 @@ const CheckAuthErrMsg = "权限不足2333"
 func (a Api) CheckAuth(c *gin.Context) error {
 	//return nil
 	if e, exist := c.Get(JwtDefaultReq.JwtCtx.JwtCtxErrKey); exist {
-		err := errors.New(fmt.Sprintf("err:%s %s", CheckAuthErrMsg, e))
+		msg := fmt.Sprintf("err:%s %s", CheckAuthErrMsg, e)
+		err := GetWebErrorFromErrMsg(CheckAuthErrMsg)
 		resp := ApiResp{
-			Err:  err.Error(),
-			Body: nil,
+			Code: err.Code(),
+			Msg:  err.Error(),
+			Data: msg,
 		}
 		c.AbortWithStatusJSON(http.StatusUnauthorized, resp)
 		return err

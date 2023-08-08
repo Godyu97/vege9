@@ -1,14 +1,12 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeTools"
-	"log"
-	"time"
+	"github.com/Godyu97/vege9/vegeRouter/demoApi"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	for {
-		log.Println(vegeTools.RandSelfDefMask(8, "0123456789abcdefghijklmnopqrstuvwxyz"))
-		time.Sleep(time.Second)
-	}
+	engine := gin.Default()
+	demoApi.InitHttpDemo(engine)
+	engine.Run(":9010")
 }

@@ -39,10 +39,11 @@ func Call(ctx *gin.Context, service any, methodName string) (response any, err e
 	}
 	parameter := method.Type.In(2)
 	req := reflect.New(parameter.Elem()).Interface()
-	err = ctx.ShouldBind(&req)
+	err = ctx.ShouldBind(req)
 	if err != nil {
 		return "", errors.New(fmt.Sprintf("bcCggifz ctx.ShouldBind(&req) err:%s", err))
 	}
+
 	in := make([]reflect.Value, 0, 2)
 	in = append(in, reflect.ValueOf(ctx))
 	in = append(in, reflect.ValueOf(req))
