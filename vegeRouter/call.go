@@ -1,12 +1,12 @@
 package vegeRouter
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"reflect"
 
 	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -16,7 +16,7 @@ const (
 	UriToFnName = "UriToFnName"
 )
 
-func Call(ctx context.Context, service any, methodName string, request []byte) (response any, err error) {
+func Call(ctx *gin.Context, service any, methodName string) (response any, err error) {
 	if methodName == SendOk ||
 		methodName == SendBad ||
 		methodName == CheckAuth ||
@@ -39,12 +39,9 @@ func Call(ctx context.Context, service any, methodName string, request []byte) (
 	}
 	parameter := method.Type.In(2)
 	req := reflect.New(parameter.Elem()).Interface()
-	if len(request) != 0 {
-		err = vegeTools.JsonUnmarshal(request, req)
-		if err != nil {
-			return "",
-				errors.New(fmt.Sprintf("bcCggifz req json unmarshal failed err:%s", err))
-		}
+	err = ctx.ShouldBind(&req)
+	if err != nil {
+		return "", errors.New(fmt.Sprintf("bcCggifz ctx.ShouldBind(&req) err:%s", err))
 	}
 	in := make([]reflect.Value, 0, 2)
 	in = append(in, reflect.ValueOf(ctx))

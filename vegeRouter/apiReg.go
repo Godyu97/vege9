@@ -1,9 +1,7 @@
 package vegeRouter
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"io"
 )
 
 const (
@@ -27,7 +25,6 @@ type Register interface {
 func RegApiHandler(bind Register) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		input := ctx.Param(uri)
-
 		if len(input) < 2 {
 			bind.SendBad(ctx, "afdmWYon uri parsing failed, please req correct path")
 			return
@@ -39,14 +36,8 @@ func RegApiHandler(bind Register) gin.HandlerFunc {
 		if err := bind.CheckAuth(ctx); err != nil {
 			return
 		}
-		//读body,经测试body为空时不是nil
-		body, err := io.ReadAll(ctx.Request.Body)
-		if err != nil {
-			bind.SendBad(ctx, fmt.Sprintf("zNySzVLB read body err:%s", err))
-			return
-		}
 		//Call Api
-		resp, err := Call(ctx, bind, methodName, body)
+		resp, err := Call(ctx, bind, methodName)
 		if err != nil {
 			bind.SendBad(ctx, err.Error())
 			return
