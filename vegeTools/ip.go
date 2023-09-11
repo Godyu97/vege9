@@ -1,8 +1,10 @@
 package vegeTools
 
 import (
+	"encoding/binary"
 	"errors"
 	"net"
+	"net/http"
 	"os/exec"
 	"strings"
 )
@@ -62,12 +64,6 @@ func GetMacMap() map[string]string {
 // curl ip.sb 的响应值 被GWF服务器不可用
 func GetPublicIp_ipsb() (ip string, err error) {
 	command := exec.Command("curl", "ip.sb")
-
-	//err = command.Run()
-	//if err != nil {
-	//	return "", err
-	//}
-
 	//Output 为将命令执行并返回输出
 	output, err := command.Output()
 	if err != nil {
@@ -76,4 +72,37 @@ func GetPublicIp_ipsb() (ip string, err error) {
 	//多余换行符
 	res := string(output[:len(output)-1])
 	return res, nil
+}
+
+const (
+	XForwardedFor = "X-Forwarded-For"
+	XRealIP       = "X-Real-IP"
+)
+
+// RemoteIp 返回远程客户端的 IP，如 192.168.1.1
+func RemoteIp(req *http.Request) string {
+	remoteAddr := req.RemoteAddr
+	if ip := req.Header.Get(XRealIP); ip != "" {
+		remoteAddr = ip
+	} else if ip = req.Header.Get(XForwardedFor); ip != "" {
+		remoteAddr = ip
+	} else {
+		remoteAddr, _, _ = net.SplitHostPort(remoteAddr)
+	}
+
+	if remoteAddr == "::1" {
+		remoteAddr = "127.0.0.1"
+	}
+
+	return remoteAddr
+}
+
+// Ip2long 将 IPv4 字符串形式转为 uint32
+func Ip2long(ipstr string) uint32 {
+	ip := net.ParseIP(ipstr)
+	if ip == nil {
+		return 0
+	}
+	ip = ip.To4()
+	return binary.BigEndian.Uint32(ip)
 }

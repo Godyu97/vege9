@@ -6,6 +6,7 @@ import (
 	"github.com/Godyu97/vege9/midware"
 	"github.com/Godyu97/vege9/midware/jwtApi"
 	"github.com/Godyu97/vege9/vegeRouter"
+	"github.com/Godyu97/vege9/vegeTools"
 	"net/http"
 	"time"
 )
@@ -21,7 +22,7 @@ var JwtDefaultReq midware.JwtReq
 func InitHttpDemo(r *gin.Engine) {
 	r.GET("/Ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Pong pong pong",
+			"message": "Pong pong pong:" + vegeTools.RemoteIp(c.Request),
 		})
 	})
 	//group router
