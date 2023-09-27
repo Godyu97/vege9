@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeRouter/demoApi"
-	"github.com/gin-gonic/gin"
+	"github.com/Godyu97/vege9/vegeTools"
+	"log"
 )
 
 func main() {
-	engine := gin.Default()
-	demoApi.InitHttpDemo(engine)
-	engine.Run(":9010")
+	s := vegeTools.RemoveInvalidParentheses("()()()(（丝丝））()", [2]rune{'（', '）'})
+	s = vegeTools.RemoveInvalidParentheses(s, [2]rune{'(', ')'})
+	log.Println(s)
 }
