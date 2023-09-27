@@ -56,3 +56,13 @@ func hmacsha2(args []string, argn int) {
 	}
 	fmt.Println(vegeTools.HashBySalt(args[1], ""))
 }
+
+func brackets(args []string, argn int) {
+	if argn != 2 {
+		log.Println("bad param~")
+		return
+	}
+	s := vegeTools.RemoveInvalidParentheses(args[1], [2]rune{'(', ')'})
+	s = vegeTools.RemoveInvalidParentheses(s, [2]rune{'（', '）'})
+	fmt.Println(s)
+}

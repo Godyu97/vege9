@@ -17,6 +17,7 @@ const (
 	Cmd_netinter = "netinter" //网卡上的全部 ip
 	Cmd_ipsb     = "ipsb"     //curl ip.sb
 	Cmd_hash     = "hash"     //计算hmac sha2的hash值
+	Cmd_brackets = "brackets"
 )
 
 var cmdL = []string{
@@ -25,6 +26,7 @@ var cmdL = []string{
 	Cmd_netinter,
 	Cmd_ipsb,
 	Cmd_hash,
+	Cmd_brackets,
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -72,6 +74,9 @@ to quickly create a Cobra application.`,
 				return
 			case Cmd_hash:
 				hmacsha2(args, argn)
+				return
+			case Cmd_brackets:
+				brackets(args, argn)
 				return
 			default:
 				log.Println("unknown param~")
