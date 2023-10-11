@@ -5,6 +5,7 @@ import (
 	"github.com/Godyu97/vege9/midware/jwtApi"
 	"github.com/gin-gonic/gin"
 	"sync"
+	"strings"
 )
 
 type JwtReq struct {
@@ -18,6 +19,10 @@ type CtxKey struct {
 	JwtCtxMcKey  string
 }
 
+const (
+	PrefixBearer = "Bearer"
+)
+
 // JWTAuthMiddleware
 // 基于JWT认证中间件
 func JWTAuthMiddleware(req JwtReq) gin.HandlerFunc {
@@ -26,6 +31,8 @@ func JWTAuthMiddleware(req JwtReq) gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 		jwtStr := c.Request.Header.Get(req.JwtCtx.JwtHeaderKey)
+		jwtStr = strings.TrimPrefix(jwtStr, PrefixBearer)
+		jwtStr = strings.TrimSpace(jwtStr)
 		mc, err := req.JwtObj.ParseToken(jwtStr)
 		if err != nil {
 			c.Set(req.JwtCtx.JwtCtxErrKey, err)

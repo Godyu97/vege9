@@ -14,7 +14,7 @@ func (j *JwtCfg) SignedTokenStr(data any) (string, error) {
 		jwt.RegisteredClaims{},
 	}
 	if j.TokenExpireDuration != 0 {
-		c.ExpiresAt = &jwt.NumericDate{time.Now().Add(j.TokenExpireDuration)}
+		c.ExpiresAt = jwt.NewNumericDate(time.Now().Add(j.TokenExpireDuration))
 	}
 	if j.Issuer != "" {
 		c.Issuer = j.Issuer
@@ -34,7 +34,7 @@ func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
 		jwt.RegisteredClaims{},
 	}
 	if j.TokenExpireDuration != 0 {
-		c.ExpiresAt = &jwt.NumericDate{time.Now().Add(j.TokenExpireDuration)}
+		c.ExpiresAt = jwt.NewNumericDate(time.Now().Add(j.TokenExpireDuration))
 	}
 	if j.Issuer != "" {
 		c.Issuer = j.Issuer
@@ -53,7 +53,7 @@ func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
 // 解析 jwt token
 func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {
 	//解析token
-	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (i interface{}, err error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (i any, err error) {
 		return []byte(j.key), nil
 	})
 	if err != nil {
