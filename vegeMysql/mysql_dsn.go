@@ -26,6 +26,14 @@ var DefaultParams = map[string]string{
 
 type MysqlDsnOptionFunc func(dsn *MysqlDSN)
 
+//给NewDefaultMysqlDsn调用者提供一个默认的dsn struct,便于conf读取
+type DefaultDns struct {
+	Username string
+	Password string
+	Address  string
+	Database string
+}
+
 func NewDefaultMysqlDsn(params map[string]string, ops ...MysqlDsnOptionFunc) *MysqlDSN {
 	obj := new(MysqlDSN)
 	obj.Params = params
