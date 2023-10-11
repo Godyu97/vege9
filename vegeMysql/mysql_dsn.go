@@ -9,7 +9,7 @@ import (
 
 type MysqlDSN struct {
 	Dsn      string
-	Type     string //deprecated
+	Type     string //Deprecated
 	Username string
 	Password string
 	Protocol string
