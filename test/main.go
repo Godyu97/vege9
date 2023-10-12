@@ -1,15 +1,12 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeConfig"
-	"fmt"
+	"github.com/Godyu97/vege9/vegeTools"
+	"log"
 )
 
 func main() {
-	vegeConfig.InitCfg("./vegeConfig", "test_cfg.yaml")
-	cfg := vegeConfig.GetCfg()
-	cfg.DSN = "modify"
-	fmt.Printf("out:%p\n", &cfg)
-	cfg2 := vegeConfig.GetCfg()
-	fmt.Printf("out:%p\n", &cfg2)
+	result := []any{1, 2, 3}
+	log.Println(result[:0]...)
+	print(vegeTools.RemoveInvalidParentheses(`（asd（（（啊啊啊`, [2]rune{'（', '）'}))
 }
