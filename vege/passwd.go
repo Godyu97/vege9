@@ -1,4 +1,4 @@
-package vegeTools
+package vege
 
 import (
 	"crypto/hmac"
@@ -9,8 +9,10 @@ import (
 	"time"
 )
 
+var vegeRand *rand.Rand
+
 func init() {
-	rand.Seed(time.Now().UnixNano())
+	vegeRand = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -23,10 +25,10 @@ const (
 func RandStringMask(n int) string {
 	b := new(strings.Builder)
 	b.Grow(n)
-	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
-	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+	// A vegeRand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, vegeRand.Int63(), letterIdxMax; i >= 0; {
 		if remain == 0 {
-			cache, remain = rand.Int63(), letterIdxMax
+			cache, remain = vegeRand.Int63(), letterIdxMax
 		}
 		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
 			b.WriteByte(letterBytes[idx])
@@ -40,10 +42,10 @@ func RandStringMask(n int) string {
 
 func RandBytesMask(n int) []byte {
 	b := make([]byte, n)
-	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
-	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+	// A vegeRand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, vegeRand.Int63(), letterIdxMax; i >= 0; {
 		if remain == 0 {
-			cache, remain = rand.Int63(), letterIdxMax
+			cache, remain = vegeRand.Int63(), letterIdxMax
 		}
 		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
 			b[i] = letterBytes[idx]
@@ -60,10 +62,10 @@ const codeBytes = "0123456789"
 func RandCodeMask(n int) string {
 	b := new(strings.Builder)
 	b.Grow(n)
-	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
-	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+	// A vegeRand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, vegeRand.Int63(), letterIdxMax; i >= 0; {
 		if remain == 0 {
-			cache, remain = rand.Int63(), letterIdxMax
+			cache, remain = vegeRand.Int63(), letterIdxMax
 		}
 		if idx := int(cache & letterIdxMask); idx < len(codeBytes) {
 			b.WriteByte(codeBytes[idx])
@@ -80,10 +82,10 @@ const idBytes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 func RandIdMask(n int) string {
 	b := new(strings.Builder)
 	b.Grow(n)
-	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
-	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+	// A vegeRand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, vegeRand.Int63(), letterIdxMax; i >= 0; {
 		if remain == 0 {
-			cache, remain = rand.Int63(), letterIdxMax
+			cache, remain = vegeRand.Int63(), letterIdxMax
 		}
 		if idx := int(cache & letterIdxMask); idx < len(idBytes) {
 			b.WriteByte(idBytes[idx])
@@ -98,10 +100,10 @@ func RandIdMask(n int) string {
 func RandSelfDefMask(n int, bs string) string {
 	b := new(strings.Builder)
 	b.Grow(n)
-	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!
-	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+	// A vegeRand.Int63() generates 63 random bits, enough for letterIdxMax letters!
+	for i, cache, remain := n-1, vegeRand.Int63(), letterIdxMax; i >= 0; {
 		if remain == 0 {
-			cache, remain = rand.Int63(), letterIdxMax
+			cache, remain = vegeRand.Int63(), letterIdxMax
 		}
 		if idx := int(cache & letterIdxMask); idx < len(bs) {
 			b.WriteByte(bs[idx])

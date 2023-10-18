@@ -1,4 +1,4 @@
-package vegeTools
+package vege
 
 func ItemIsInSlice[T comparable](item T, slice []T) bool {
 	for _, s := range slice {

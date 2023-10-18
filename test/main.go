@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 	"log"
+	"time"
 )
 
 func main() {
-	result := []any{1, 2, 3}
-	log.Println(result[:0]...)
-	print(vegeTools.RemoveInvalidParentheses(`（asd（（（啊啊啊`, [2]rune{'（', '）'}))
+	for {
+		log.Println(vege.RandStringMask(8))
+		time.Sleep(time.Second)
+	}
 }

@@ -1,7 +1,7 @@
 package self
 
 import (
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 )
 
 type Subscriber struct {
@@ -14,15 +14,15 @@ func (r *Subscriber) RegionValue() ([]int64, error) {
 	if r.Region == nil {
 		return s, nil
 	}
-	err := vegeTools.JsonUnmarshalFromString(*r.Region, &s)
+	err := vege.JsonUnmarshalFromString(*r.Region, &s)
 	return s, err
 }
 
 func (r *Subscriber) RegionScan(in []int64) error {
 	if in == nil {
-		in = make([]int64, 0, 0)
+		in = make([]int64, 0)
 	}
-	js, err := vegeTools.JsonMarshalToString(in)
+	js, err := vege.JsonMarshalToString(in)
 	if err != nil {
 		return err
 	}
@@ -35,15 +35,15 @@ func (r *Subscriber) KeywordsValue() ([]string, error) {
 	if r.Keywords == nil {
 		return s, nil
 	}
-	err := vegeTools.JsonUnmarshalFromString(*r.Keywords, &s)
+	err := vege.JsonUnmarshalFromString(*r.Keywords, &s)
 	return s, err
 }
 
 func (r *Subscriber) KeywordsScan(in []string) error {
 	if in == nil {
-		in = make([]string, 0, 0)
+		in = make([]string, 0)
 	}
-	js, err := vegeTools.JsonMarshalToString(in)
+	js, err := vege.JsonMarshalToString(in)
 	if err != nil {
 		return err
 	}

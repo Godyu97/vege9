@@ -1,4 +1,4 @@
-package vegeTools
+package vege
 
 import (
 	"fmt"

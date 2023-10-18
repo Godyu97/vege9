@@ -1,4 +1,4 @@
-package vegeTools
+package vege
 
 // RemoveInvalidParentheses 去除s中不成对的括号，pair为成对的括号
 func RemoveInvalidParentheses(s string, pair [2]rune) string {

@@ -1,6 +1,6 @@
-package vegeTools
+package vege
 
-//Ptr2Value return ptr's value; if ptr==nil,return zero Ts
+// Ptr2Value return ptr's value; if ptr==nil,return zero Ts
 func Ptr2Value[T any](ptr *T) T {
 	var res T
 	if ptr != nil {
@@ -9,7 +9,7 @@ func Ptr2Value[T any](ptr *T) T {
 	return res
 }
 
-//Value2Ptr return &v
+// Value2Ptr return &v
 func Value2Ptr[T any](v T) *T {
 	return &v
 }

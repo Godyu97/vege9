@@ -1,11 +1,11 @@
-package vegeTools
+package vege
 
 import (
-	"encoding/gob"
 	"bytes"
+	"encoding/gob"
 )
 
-//json实现 dst必须是指针
+// json实现 dst必须是指针
 func DeepCopyByJson(src, dst any) error {
 	if tmp, err := JsonMarshalV2(src); err != nil {
 		return err
@@ -15,7 +15,7 @@ func DeepCopyByJson(src, dst any) error {
 	}
 }
 
-//gob实现 dst必须是指针
+// gob实现 dst必须是指针
 func DeepCopyByGob(src, dst any) error {
 	buffer := new(bytes.Buffer)
 	if err := gob.NewEncoder(buffer).Encode(src); err != nil {

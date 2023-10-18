@@ -1,4 +1,4 @@
-package vegeTools
+package vege
 
 // MapToObj map[string] interface ---> obj
 func MapToObj(m map[string]any, obj any) error {

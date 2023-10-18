@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 	"github.com/gin-gonic/gin"
 )
 
@@ -48,7 +48,7 @@ func Call(ctx *gin.Context, service any, methodName string) (response any, err e
 	in = append(in, reflect.ValueOf(ctx))
 	in = append(in, reflect.ValueOf(req))
 	call := make([]reflect.Value, 0, 2)
-	err = vegeTools.PanicToErr(func() {
+	err = vege.PanicToErr(func() {
 		call = reflect.ValueOf(service).MethodByName(methodName).Call(in)
 	})
 	if err != nil {

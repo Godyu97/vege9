@@ -1,8 +1,8 @@
-package vegeTools
+package vege
 
 import (
-	jsoniter "github.com/json-iterator/go"
 	"github.com/bytedance/sonic"
+	jsoniter "github.com/json-iterator/go"
 )
 
 // jsoniter.ConfigCompatibleWithStandardLibrary 实现

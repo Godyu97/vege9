@@ -2,7 +2,7 @@ package demoApi
 
 import (
 	"github.com/Godyu97/vege9/midware"
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +21,7 @@ func (a Api) DemoPostFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err
 		panic(err)
 	}
 	//resp token obj json
-	resp.Data, _ = vegeTools.JsonMarshalToString(mc.Token)
+	resp.Data, _ = vege.JsonMarshalToString(mc.Token)
 	resp.Id = req.Id
 	resp.Data = "Hello,vege9!Post"
 	return resp, nil

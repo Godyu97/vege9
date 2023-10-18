@@ -1,7 +1,7 @@
 package jwtApi
 
 import (
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -12,5 +12,5 @@ type MyClaims struct {
 
 // obj 为指针，内部实现为json unmarshal
 func (mc *MyClaims) TokenObj(obj any) error {
-	return vegeTools.MapToObj(mc.Token.(map[string]any), obj)
+	return vege.MapToObj(mc.Token.(map[string]any), obj)
 }

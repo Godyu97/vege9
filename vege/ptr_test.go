@@ -1,8 +1,8 @@
-package vegeTools
+package vege
 
 import (
-	"testing"
 	"reflect"
+	"testing"
 )
 
 type PtrObj struct {

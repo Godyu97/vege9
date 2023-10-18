@@ -1,12 +1,11 @@
-package vegeTools
+package vege
 
 import (
 	"context"
+	"github.com/Godyu97/vege9/vege/deque"
 	"sync"
 	"sync/atomic"
 	"time"
-
-	"github.com/Godyu97/vege9/vegeTools/deque"
 )
 
 const (

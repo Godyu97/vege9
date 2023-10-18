@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/Godyu97/vege9/vegeTools"
+	"github.com/Godyu97/vege9/vege"
 	"log"
 	"strconv"
 )
@@ -17,11 +17,11 @@ func newps(args []string, argn int) {
 			return
 		}
 	}
-	fmt.Println(vegeTools.RandStringMask(n))
+	fmt.Println(vege.RandStringMask(n))
 }
 
 func localip() {
-	ip, err := vegeTools.GetLocalIpv4ByUdp()
+	ip, err := vege.GetLocalIpv4ByUdp()
 	if err != nil {
 		log.Println(err)
 		return
@@ -30,7 +30,7 @@ func localip() {
 }
 
 func netinter() {
-	list, err := vegeTools.GetLocalIpv4List()
+	list, err := vege.GetLocalIpv4List()
 	if err != nil {
 		log.Println(err)
 		return
@@ -41,7 +41,7 @@ func netinter() {
 }
 
 func ipsb() {
-	ip, err := vegeTools.GetPublicIp_ipsb()
+	ip, err := vege.GetPublicIp_ipsb()
 	if err != nil {
 		log.Println(err)
 		return
@@ -54,7 +54,7 @@ func hmacsha2(args []string, argn int) {
 		log.Println("bad param~")
 		return
 	}
-	fmt.Println(vegeTools.HashBySalt(args[1], ""))
+	fmt.Println(vege.HashBySalt(args[1], ""))
 }
 
 func brackets(args []string, argn int) {
@@ -62,7 +62,7 @@ func brackets(args []string, argn int) {
 		log.Println("bad param~")
 		return
 	}
-	s := vegeTools.RemoveInvalidParentheses(args[1], [2]rune{'(', ')'})
-	s = vegeTools.RemoveInvalidParentheses(s, [2]rune{'（', '）'})
+	s := vege.RemoveInvalidParentheses(args[1], [2]rune{'(', ')'})
+	s = vege.RemoveInvalidParentheses(s, [2]rune{'（', '）'})
 	fmt.Println(s)
 }
