@@ -1,4 +1,4 @@
-package vegeMysql
+package vegedsn
 
 import (
 	"net/url"
@@ -26,7 +26,7 @@ var DefaultParams = map[string]string{
 
 type MysqlDsnOptionFunc func(dsn *MysqlDSN)
 
-//给NewDefaultMysqlDsn调用者提供一个默认的dsn struct,便于conf读取
+// 给NewDefaultMysqlDsn调用者提供一个默认的dsn struct,便于conf读取
 type DefaultDns struct {
 	Username string
 	Password string

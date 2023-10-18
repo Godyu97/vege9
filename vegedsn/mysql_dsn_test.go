@@ -1,4 +1,4 @@
-package vegeMysql
+package vegedsn
 
 import (
 	"fmt"

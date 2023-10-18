@@ -1,4 +1,4 @@
-package vegeLog
+package vegelog
 
 import (
 	"go.uber.org/zap/zapcore"

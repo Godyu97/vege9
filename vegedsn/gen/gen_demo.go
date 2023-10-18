@@ -2,19 +2,19 @@ package main
 
 //gorm gen demo
 import (
-	"github.com/Godyu97/vege9/vegeMysql"
-	"github.com/Godyu97/vege9/vegeMysql/gen/self"
+	"github.com/Godyu97/vege9/vegedsn"
+	"github.com/Godyu97/vege9/vegedsn/gen/self"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gen/field"
 	"gorm.io/gorm"
 )
 
-var dns = vegeMysql.NewDefaultMysqlDsn(
-	vegeMysql.DefaultParams,
-	vegeMysql.WithAuth("root", "passwd"),
-	vegeMysql.WithAddress("host:port"),
-	vegeMysql.WithDatabase("db"),
+var dns = vegedsn.NewDefaultMysqlDsn(
+	vegedsn.DefaultParams,
+	vegedsn.WithAuth("root", "passwd"),
+	vegedsn.WithAddress("host:port"),
+	vegedsn.WithDatabase("db"),
 ).String()
 
 // go run . 生成dal模型代码
