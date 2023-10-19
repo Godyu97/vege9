@@ -8,7 +8,7 @@ import (
 
 func main() {
 	for {
-		log.Println(vege.RandStringMask(8))
+		log.Println(vege.NewGoogleUUID())
 		time.Sleep(time.Second)
 	}
 }
