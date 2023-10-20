@@ -11,6 +11,7 @@ import (
 )
 
 var logger *zap.Logger
+var writer zapcore.WriteSyncer
 
 // InitLogger
 // 初始化logger记录日志的文件
@@ -29,6 +30,7 @@ func LogDebug(msg ...any) {
 		logger.Debug(fmt.Sprintln(msg...))
 	}
 }
+
 func LogInfo(msg ...any) {
 	if logger != nil {
 		logger.Info(fmt.Sprintln(msg...))
@@ -48,7 +50,9 @@ func LogPanic(msg ...any) {
 }
 
 func getLogWriter(file string) zapcore.WriteSyncer {
-	//file, _ := os.Create(filePath)
+	if writer != nil {
+		return writer
+	}
 	fileObj := &lumberjack.Logger{
 		Filename: file, // 日志文件路径，默认 os.TempDir()
 		MaxSize:  1000, // 每个日志文件保存1000M，默认 100M
@@ -56,13 +60,14 @@ func getLogWriter(file string) zapcore.WriteSyncer {
 	}
 	// 利用io.MultiWriter支持文件和终端两个输出目标
 	ws := io.MultiWriter(fileObj, os.Stdout)
-	return zapcore.AddSync(ws)
+	writer = zapcore.AddSync(ws)
+	return writer
 }
 
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder // 修改时间编码器
-
+	// 修改时间编码器 ISO8601TimeEncoder
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 	// 在日志文件中使用大写字母记录日志级别
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	// NewConsoleEncoder 打印更符合人们观察的方式
@@ -75,4 +80,12 @@ func GetZapLogger() *zap.Logger {
 		return logger
 	}
 	panic("InitLogger first")
+}
+
+// 为其他组件提供Writer接口
+func GetLogWriter() io.Writer {
+	if writer != nil {
+		return writer
+	}
+	return os.Stdout
 }
