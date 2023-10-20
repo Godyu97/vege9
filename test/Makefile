@@ -32,7 +32,7 @@ chmod: $(BUILD_DIR)/$(OUT_NAME)
 	chmod a+x $(BUILD_DIR)/$(OUT_NAME)
 
 clean:
-	rm -rf $(BUILD_DIR)/$(OUT_NAME)* $(BUILD_DIR)/*.log
+	rm -rf $(BUILD_DIR)/$(OUT_NAME)* $(BUILD_DIR)/*.log $(BUILD_DIR)/log
 
 env:
 	go env
