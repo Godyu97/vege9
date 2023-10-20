@@ -53,6 +53,7 @@ type ApiResp struct {
 
 func (a Api) SendOk(c *gin.Context, body any) {
 	c.JSON(http.StatusOK, body)
+	return
 }
 
 func (a Api) SendBad(c *gin.Context, errMsg string) {
@@ -63,7 +64,8 @@ func (a Api) SendBad(c *gin.Context, errMsg string) {
 		Msg:  err.Error(),
 		Data: nil,
 	}
-	c.AbortWithStatusJSON(http.StatusInternalServerError, resp)
+	c.JSON(http.StatusInternalServerError, resp)
+	return
 }
 
 const CheckAuthErrMsg = "权限不足2333"
@@ -78,7 +80,7 @@ func (a Api) CheckAuth(c *gin.Context) error {
 			Msg:  err.Error(),
 			Data: msg,
 		}
-		c.AbortWithStatusJSON(http.StatusUnauthorized, resp)
+		c.JSON(http.StatusUnauthorized, resp)
 		return err
 	}
 	return nil
