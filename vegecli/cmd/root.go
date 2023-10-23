@@ -6,27 +6,62 @@ package cmd
 import (
 	"os"
 
-	"fmt"
+	"github.com/Godyu97/vege9/vege"
 	"github.com/spf13/cobra"
-	"log"
 )
 
 const (
-	Cmd_newps    = "newps"    //随机生成字符串
+	Cmd_newps    = "newps"    //随机生成字符串,默认8位,可输入数字指定长度
 	Cmd_localip  = "localip"  //udp 得到 local ip
 	Cmd_netinter = "netinter" //网卡上的全部 ip
-	Cmd_ipsb     = "ipsb"     //curl ip.sb
-	Cmd_hash     = "hash"     //计算hmac sha2的hash值
-	Cmd_brackets = "brackets"
+	Cmd_ipip     = "ipip"     //http get ipip.net获取公网ip
+	Cmd_ipsb     = "ipsb"     //http get ip.sb获取公网ip
+	Cmd_hash     = "hash"     //通过hmac_sha2算法计算目标字符串的hash值
+	Cmd_brackets = "brackets" //去除目标字符串不匹配括号
+	Cmd_mac      = "mac"      //获取本机所有的mac地址
 )
 
-var cmdL = []string{
-	Cmd_newps,
-	Cmd_localip,
-	Cmd_netinter,
-	Cmd_ipsb,
-	Cmd_hash,
-	Cmd_brackets,
+var MapCLI = map[string]CLI{
+	Cmd_newps: {
+		Cmd:     Cmd_newps,
+		Func:    newps,
+		Comment: "随机生成字符串,默认8位,可输入数字指定长度",
+	},
+	Cmd_localip: {
+		Cmd:     Cmd_localip,
+		Func:    localip,
+		Comment: "udp 得到 local ip",
+	},
+	Cmd_netinter: {
+		Cmd:     Cmd_netinter,
+		Func:    netinter,
+		Comment: "网卡上的全部 ip",
+	},
+	Cmd_ipip: {
+		Cmd:     Cmd_ipip,
+		Func:    ipip,
+		Comment: "http get ipip.net获取公网ip",
+	},
+	Cmd_ipsb: {
+		Cmd:     Cmd_ipsb,
+		Func:    ipsb,
+		Comment: "http get ip.sb获取公网ip",
+	},
+	Cmd_hash: {
+		Cmd:     Cmd_hash,
+		Func:    hmacsha2,
+		Comment: "通过hmac_sha2算法计算目标字符串的hash值",
+	},
+	Cmd_brackets: {
+		Cmd:     Cmd_brackets,
+		Func:    brackets,
+		Comment: "去除目标字符串不匹配括号",
+	},
+	Cmd_mac: {
+		Cmd:     Cmd_mac,
+		Func:    mac,
+		Comment: "获取本机所有的mac地址",
+	},
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -41,12 +76,11 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	//PreRun before Run
 	PreRun: func(cmd *cobra.Command, args []string) {
-		if *t {
-			fmt.Println("helping cmd list:")
-			for _, v := range cmdL {
-				fmt.Println(v)
+		if vege.Ptr2Value(toggle) == true {
+			Info("Help message for toggle cmd list")
+			for _, item := range MapCLI {
+				Info(item.Cmd, ":", item.Comment)
 			}
-			needReturn = true
 			return
 		}
 		return
@@ -54,35 +88,16 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		if checkReturn() {
+		if checkReturn() == true {
 			return
 		}
-		argn := len(args)
-		if argn > 0 {
-			switch args[0] {
-			case Cmd_newps:
-				newps(args, argn)
-				return
-			case Cmd_localip:
-				localip()
-				return
-			case Cmd_netinter:
-				netinter()
-				return
-			case Cmd_ipsb:
-				ipsb()
-				return
-			case Cmd_hash:
-				hmacsha2(args, argn)
-				return
-			case Cmd_brackets:
-				brackets(args, argn)
-				return
-			default:
-				log.Println("unknown param~")
-			}
+		argc := len(args)
+		if argc > 0 {
+			cli := MapCLI[args[0]]
+			cli.Func(argc, args)
+			return
 		} else {
-			log.Println("need param~")
+			Error("need param~")
 			return
 		}
 	},

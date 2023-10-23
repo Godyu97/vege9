@@ -1,13 +1,21 @@
 package vege
 
 import (
+	"crypto/tls"
 	"encoding/binary"
 	"errors"
+	"fmt"
+	"io"
 	"net"
 	"net/http"
-	"os/exec"
 	"strings"
 )
+
+var SkipHttpsClient = &http.Client{Transport: &http.Transport{
+	TLSClientConfig: &tls.Config{
+		InsecureSkipVerify: true,
+	},
+}}
 
 // GetLocalIpv4List
 // 获取所有非lo的网卡ip
@@ -27,7 +35,7 @@ func GetLocalIpv4List() ([]string, error) {
 		}
 	}
 	if len(res) == 0 {
-		err = errors.New("can not find ip address~")
+		err = errors.New("RcpWHuHB not find ip address~")
 		return nil, err
 	}
 	return res, nil
@@ -46,32 +54,90 @@ func GetLocalIpv4ByUdp() (ip string, err error) {
 	return
 }
 
-// GetMacMap
+// GetMacAddr
 // 获取本机的MAC地址
-func GetMacMap() map[string]string {
+func GetMacAddr() (map[string]string, error) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
-		panic("Poor soul, here is what you got: " + err.Error())
+		return nil, fmt.Errorf("ePbWfcoN net.Interfaces() err:%w", err)
 	}
-	res := make(map[string]string)
+	res := make(map[string]string, len(interfaces))
 	for _, inter := range interfaces {
-		res[inter.Name] = inter.HardwareAddr.String() //获取本机MAC地址
+		m := inter.HardwareAddr.String() //获取本机MAC地址
+		if m != "" {
+			res[inter.Name] = m
+		}
 	}
-	return res
+	return res, nil
 }
 
-// GetPublicIp_ipsb
-// curl ip.sb 的响应值 被GWF服务器不可用
-func GetPublicIp_ipsb() (ip string, err error) {
-	command := exec.Command("curl", "ip.sb")
-	//Output 为将命令执行并返回输出
-	output, err := command.Output()
+type IpTyp uint8
+
+const (
+	IpV4Typ IpTyp = iota
+	IpV6Typ
+)
+
+const (
+	IPSB4URL = `http://api-ipv4.ip.sb/ip`
+	IPSB6URL = `http://api-ipv6.ip.sb/ip`
+)
+
+// GetPubIpVipsb 通过ip.sb获取公网ip
+func GetPubIpVipsb(typ IpTyp) (ip string, err error) {
+	//http实现
+	url := ""
+	switch typ {
+	case IpV4Typ:
+		url = IPSB4URL
+		break
+	case IpV6Typ:
+		url = IPSB6URL
+		break
+	default:
+		return "", fmt.Errorf("NXmZuhNz no support type:%d", typ)
+	}
+	resp, err := http.Get(url)
 	if err != nil {
 		return "", err
 	}
-	//多余换行符
-	res := string(output[:len(output)-1])
-	return res, nil
+	defer resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	ip = strings.TrimSpace(string(b))
+	return ip, nil
+}
+
+const (
+	IPIP4URL = `http://myip.ipip.net/s`
+)
+
+// GetPubIpVipip 通过ip.sb获取公网ip 仅支持ipv4
+func GetPubIpVipip(typ IpTyp) (ip string, err error) {
+	//http实现
+	url := ""
+	switch typ {
+	case IpV4Typ:
+		url = IPIP4URL
+		break
+	case IpV6Typ:
+		return "", fmt.Errorf("wZWdFhsH no support type:%d", typ)
+	default:
+		return "", fmt.Errorf("WMaPBIjm no support type:%d", typ)
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	ip = strings.TrimSpace(string(b))
+	return ip, nil
 }
 
 const (
@@ -97,9 +163,9 @@ func RemoteIp(req *http.Request) string {
 	return remoteAddr
 }
 
-// Ip2long 将 IPv4 字符串形式转为 uint32
-func Ip2long(ipstr string) uint32 {
-	ip := net.ParseIP(ipstr)
+// Ip2Long 将 IPv4 字符串形式转为 uint32
+func Ip2Long(str string) uint32 {
+	ip := net.ParseIP(str)
 	if ip == nil {
 		return 0
 	}

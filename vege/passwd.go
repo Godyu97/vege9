@@ -115,9 +115,9 @@ func RandSelfDefMask(n int, bs string) string {
 	return b.String()
 }
 
-// HashBySalt
+// HmacHashWithSalt
 // hmac sha2 and salt make hash
-func HashBySalt(ps, salt string) string {
+func HmacHashWithSalt(ps, salt string) string {
 	mac := hmac.New(sha256.New, []byte(ps))
 	mac.Write([]byte(salt))
 	hs := mac.Sum(nil)
@@ -125,8 +125,8 @@ func HashBySalt(ps, salt string) string {
 }
 
 // CheckBySalt
-// check HashBySalt
-func CheckBySalt(checked, hash, salt string) bool {
-	expectedMAC := HashBySalt(checked, salt)
+// check HmacHashWithSalt
+func CheckBySalt(check, hash, salt string) bool {
+	expectedMAC := HmacHashWithSalt(check, salt)
 	return hmac.Equal([]byte(hash), []byte(expectedMAC))
 }

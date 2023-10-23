@@ -1,68 +1,94 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/Godyu97/vege9/vege"
-	"log"
 	"strconv"
 )
 
-func newps(args []string, argn int) {
+type LogicFunc func(argc int, argv []string)
+
+type CLI struct {
+	Cmd     string
+	Func    LogicFunc
+	Comment string
+}
+
+func newps(argc int, argv []string) {
 	n := 8
-	if argn == 2 {
+	if argc == 2 {
 		var err error
-		n, err = strconv.Atoi(args[1])
+		n, err = strconv.Atoi(argv[1])
 		if err != nil {
-			log.Println("IZHSMxwu 请输入有效数字：", err)
+			Error("IZHSMxwu 请输入有效数字：", err)
 			return
 		}
 	}
-	fmt.Println(vege.RandStringMask(n))
+	Info(vege.RandStringMask(n))
 }
 
-func localip() {
+func localip(argc int, argv []string) {
 	ip, err := vege.GetLocalIpv4ByUdp()
 	if err != nil {
-		log.Println(err)
+		Error(err)
 		return
 	}
-	fmt.Println(ip)
+	Info(ip)
 }
 
-func netinter() {
+func netinter(argc int, argv []string) {
 	list, err := vege.GetLocalIpv4List()
 	if err != nil {
-		log.Println(err)
+		Error(err)
 		return
 	}
 	for _, ip := range list {
-		fmt.Println(ip)
+		Info(ip)
 	}
 }
 
-func ipsb() {
-	ip, err := vege.GetPublicIp_ipsb()
+func ipsb(argc int, argv []string) {
+	ip, err := vege.GetPubIpVipsb(vege.IpV4Typ)
 	if err != nil {
-		log.Println(err)
+		Error(err)
 		return
 	}
-	fmt.Println(ip)
+	Info(ip)
 }
 
-func hmacsha2(args []string, argn int) {
-	if argn != 2 {
-		log.Println("bad param~")
+func ipip(argc int, argv []string) {
+	ip, err := vege.GetPubIpVipip(vege.IpV4Typ)
+	if err != nil {
+		Error(err)
 		return
 	}
-	fmt.Println(vege.HashBySalt(args[1], ""))
+	Info(ip)
 }
 
-func brackets(args []string, argn int) {
-	if argn != 2 {
-		log.Println("bad param~")
+func hmacsha2(argc int, argv []string) {
+	if argc != 2 {
+		Error("bad param~")
 		return
 	}
-	s := vege.RemoveInvalidParentheses(args[1], [2]rune{'(', ')'})
+	Info(vege.HmacHashWithSalt(argv[1], ""))
+}
+
+func brackets(argc int, argv []string) {
+	if argc != 2 {
+		Error("bad param~")
+		return
+	}
+	s := vege.RemoveInvalidParentheses(argv[1], [2]rune{'(', ')'})
 	s = vege.RemoveInvalidParentheses(s, [2]rune{'（', '）'})
-	fmt.Println(s)
+	Info(s)
+}
+
+func mac(argc int, argv []string) {
+	macs, err := vege.GetMacAddr()
+	if err != nil {
+		Error(err)
+		return
+	}
+	for k, addr := range macs {
+		Info(k, ":", addr)
+	}
 }

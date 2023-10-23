@@ -37,15 +37,21 @@ func LogInfo(msg ...any) {
 	}
 }
 
+func LogWarn(msg ...any) {
+	if logger != nil {
+		logger.Warn(fmt.Sprintln(msg...))
+	}
+}
+
 func LogError(msg ...any) {
 	if logger != nil {
 		logger.Error(fmt.Sprintln(msg...))
 	}
 }
 
-func LogPanic(msg ...any) {
+func LogFatal(msg ...any) {
 	if logger != nil {
-		logger.Panic(fmt.Sprintln(msg...))
+		logger.Fatal(fmt.Sprintln(msg...))
 	}
 }
 

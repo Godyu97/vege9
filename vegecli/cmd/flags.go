@@ -1,6 +1,10 @@
 package cmd
 
-var t *bool
+import (
+	"github.com/Godyu97/vege9/vege"
+)
+
+var toggle *bool
 
 func init() {
 	// Here you will define your flags and configuration settings.
@@ -11,11 +15,14 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	t = rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle cmd list")
+	toggle = rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle cmd list")
 }
 
-var needReturn bool
-
 func checkReturn() bool {
-	return needReturn
+	switch {
+	case vege.Ptr2Value(toggle) == true:
+		return true
+	default:
+		return false
+	}
 }
