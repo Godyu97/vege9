@@ -67,21 +67,22 @@ var MapCLI = map[string]CLI{
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "vegecli",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
+	Short: "vegecli : personal cli tools helper developed by Godyu97.",
+	Long: `vegecli : personal cli tools helper developed by Godyu97.
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+to quickly create a Cobra application.
+Work Life Balance,Forever!`,
 	//PreRun before Run
 	PreRun: func(cmd *cobra.Command, args []string) {
-		if vege.Ptr2Value(toggle) == true {
+		if vege.Ptr2Value(ftoggle) == true {
 			Info("Help message for toggle cmd list")
 			for _, item := range MapCLI {
 				Info(item.Cmd, ":", item.Comment)
 			}
-			return
+		}
+		if vege.Ptr2Value(fversion) == true {
+			Info("vegecli version :", version)
 		}
 		return
 	},
@@ -93,8 +94,12 @@ to quickly create a Cobra application.`,
 		}
 		argc := len(args)
 		if argc > 0 {
-			cli := MapCLI[args[0]]
-			cli.Func(argc, args)
+			cli, ok := MapCLI[args[0]]
+			if ok {
+				cli.Func(argc, args)
+			} else {
+				Error("unknown param~")
+			}
 			return
 		} else {
 			Error("need param~")

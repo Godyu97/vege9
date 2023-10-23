@@ -1,10 +1,17 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/Godyu97/vege9/vege"
 )
 
-var toggle *bool
+const version = "v1.1.0"
+
+// flags
+var (
+	ftoggle  *bool
+	fversion *bool
+)
 
 func init() {
 	// Here you will define your flags and configuration settings.
@@ -15,12 +22,15 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	toggle = rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle cmd list")
+	ftoggle = rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle cmd list")
+	fversion = rootCmd.Flags().BoolP("version", "v", false, fmt.Sprintf("vegecli version : %s", version))
 }
 
 func checkReturn() bool {
 	switch {
-	case vege.Ptr2Value(toggle) == true:
+	case vege.Ptr2Value(ftoggle) == true:
+		return true
+	case vege.Ptr2Value(fversion) == true:
 		return true
 	default:
 		return false
