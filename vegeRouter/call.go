@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Godyu97/vege9/vege"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +15,7 @@ const (
 	UriToFnName = "UriToFnName"
 )
 
+// 业务中的panic可以通过gin.Recivery打印到gin.DefaultErrorWriter中
 func Call(ctx *gin.Context, service any, methodName string) (response any, err error) {
 	if methodName == SendOk ||
 		methodName == SendBad ||
@@ -48,12 +48,7 @@ func Call(ctx *gin.Context, service any, methodName string) (response any, err e
 	in = append(in, reflect.ValueOf(ctx))
 	in = append(in, reflect.ValueOf(req))
 	call := make([]reflect.Value, 0, 2)
-	err = vege.PanicToErr(func() {
-		call = reflect.ValueOf(service).MethodByName(methodName).Call(in)
-	})
-	if err != nil {
-		return "", err
-	}
+	call = reflect.ValueOf(service).MethodByName(methodName).Call(in)
 	if call[1].Interface() != nil {
 		err = call[1].Interface().(error)
 		return "", err

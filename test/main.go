@@ -1,24 +1,22 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vege"
-	"log"
+	"github.com/Godyu97/vege9/vegeRouter/demoApi"
+	"github.com/Godyu97/vege9/vegelog"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap/zapcore"
 )
 
 func main() {
-	if DEBUG == false {
-		log.Println("tags release~,return")
-		return
-	}
-	//vegelog.InitLogger("./log.log", zapcore.DebugLevel)
-	//logger := vegelog.GetZapLogger()
-	//for {
-	//	time.Sleep(time.Second)
-	//	logger.Fatal("hh", zap.Int("a", 125))
+	//if DEBUG == false {
+	//	log.Println("tags release~,return")
+	//	return
 	//}
-	macMap, _ := vege.GetMacAddr()
-	for k, v := range macMap {
-		log.Println(k, v)
-	}
-
+	vegelog.InitLogger("./t.log", zapcore.DebugLevel)
+	w := vegelog.GetLogWriter()
+	gin.DefaultErrorWriter = w
+	gin.DefaultWriter = w
+	engine := gin.Default()
+	demoApi.InitHttpDemo(engine)
+	engine.Run(":8000")
 }

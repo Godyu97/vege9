@@ -14,7 +14,7 @@ type DemoFnResp struct {
 	Data string `json:"Data"`
 }
 
-func (a Api) DemoPostFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err error) {
+func (a Auth) DemoPostFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err error) {
 	resp = &DemoFnResp{}
 	mc, err := midware.GetMcFromCtx(ctx, JwtDefaultReq)
 	if err != nil {
@@ -27,9 +27,19 @@ func (a Api) DemoPostFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err
 	return resp, nil
 }
 
-func (a Api) DemoGetFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err error) {
+func (a Auth) DemoGetFn(ctx *gin.Context, req *DemoFnReq) (resp *DemoFnResp, err error) {
 	resp = &DemoFnResp{}
 	resp.Id = req.Id
 	resp.Data = "Hello,vege9!Get"
 	return resp, nil
+}
+
+func (a Customer) VegeApi(ctx *gin.Context, req *struct{}) (ApiResp, error) {
+	var ptr *string
+	//panic
+	return ApiResp{
+		Code: "",
+		Msg:  "",
+		Data: *ptr,
+	}, nil
 }

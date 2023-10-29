@@ -11,9 +11,15 @@ import (
 	"time"
 )
 
-var ApiObj = Api{
+var AuthObj = Auth{
 	UriToFnNameM: map[string]string{
-		"login": "LOGIN",
+		"vege_api": "VegeApi",
+	},
+}
+
+var CustomerObj = Customer{
+	UriToFnNameM: map[string]string{
+		"vege_api": "VegeApi",
 	},
 }
 
@@ -42,7 +48,11 @@ func InitHttpDemo(r *gin.Engine) {
 		},
 	}
 	//auth.Use(midware.JWTAuthMiddleware(JwtDefaultReq))
-	//reg Api
-	auth.GET(vegeRouter.PathUri, vegeRouter.RegApiHandler(ApiObj))
-	auth.POST(vegeRouter.PathUri, vegeRouter.RegApiHandler(ApiObj))
+	//reg Auth
+	auth.GET(vegeRouter.PathUri, vegeRouter.RegApiHandler(AuthObj))
+	auth.POST(vegeRouter.PathUri, vegeRouter.RegApiHandler(AuthObj))
+
+	customer := r.Group("/customer")
+	customer.GET(vegeRouter.PathUri, vegeRouter.RegApiHandler(CustomerObj))
+	customer.POST(vegeRouter.PathUri, vegeRouter.RegApiHandler(CustomerObj))
 }

@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+const CheckAuthErrMsg = "权限不足2333"
+
 type WebError struct {
 	code   string
 	errMsg string
@@ -40,7 +42,7 @@ var errCodeM = map[string]string{
 	//	todo 定义错误码
 }
 
-type Api struct {
+type Auth struct {
 	UriToFnNameM map[string]string
 }
 
@@ -51,12 +53,12 @@ type ApiResp struct {
 	Data any    `json:"data,omitempty" swaggerignore:"true"`
 }
 
-func (a Api) SendOk(c *gin.Context, body any) {
+func (a Auth) SendOk(c *gin.Context, body any) {
 	c.JSON(http.StatusOK, body)
 	return
 }
 
-func (a Api) SendBad(c *gin.Context, errMsg string) {
+func (a Auth) SendBad(c *gin.Context, errMsg string) {
 	//judge Code
 	err := GetWebErrorFromErrMsg(errMsg)
 	resp := ApiResp{
@@ -68,10 +70,8 @@ func (a Api) SendBad(c *gin.Context, errMsg string) {
 	return
 }
 
-const CheckAuthErrMsg = "权限不足2333"
-
-func (a Api) CheckAuth(c *gin.Context) error {
-	//return nil
+func (a Auth) CheckAuth(c *gin.Context) error {
+	//check jwt
 	if e, exist := c.Get(JwtDefaultReq.JwtCtx.JwtCtxErrKey); exist {
 		msg := fmt.Sprintf("err:%s %s", CheckAuthErrMsg, e)
 		err := GetWebErrorFromErrMsg(CheckAuthErrMsg)
@@ -86,7 +86,42 @@ func (a Api) CheckAuth(c *gin.Context) error {
 	return nil
 }
 
-func (a Api) UriToFnName(uri string) string {
+func (a Auth) UriToFnName(uri string) string {
+	fnName, ok := a.UriToFnNameM[uri]
+	if ok {
+		return fnName
+	} else {
+		return uri
+	}
+}
+
+type Customer struct {
+	UriToFnNameM map[string]string
+}
+
+func (a Customer) SendOk(c *gin.Context, body any) {
+	c.JSON(http.StatusOK, body)
+	return
+}
+
+func (a Customer) SendBad(c *gin.Context, errMsg string) {
+	//judge Code
+	err := GetWebErrorFromErrMsg(errMsg)
+	resp := ApiResp{
+		Code: err.Code(),
+		Msg:  err.Error(),
+		Data: nil,
+	}
+	c.JSON(http.StatusInternalServerError, resp)
+	return
+}
+
+func (a Customer) CheckAuth(c *gin.Context) error {
+	//return nil
+	return nil
+}
+
+func (a Customer) UriToFnName(uri string) string {
 	fnName, ok := a.UriToFnNameM[uri]
 	if ok {
 		return fnName
