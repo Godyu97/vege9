@@ -32,7 +32,7 @@ func Call(ctx *gin.Context, service any, methodName string) (response any, err e
 	}
 
 	// NumIn() : apiObj , *gin.Context, *req
-	// NumOut(): *resp err
+	// NumOut(): resp, err
 	if method.Type.NumIn() != 3 || method.Type.NumOut() != 2 {
 		return "",
 			errors.New("fwxbKFmo Invalid api")
@@ -50,8 +50,7 @@ func Call(ctx *gin.Context, service any, methodName string) (response any, err e
 	call := make([]reflect.Value, 0, 2)
 	call = reflect.ValueOf(service).MethodByName(methodName).Call(in)
 	if call[1].Interface() != nil {
-		err = call[1].Interface().(error)
-		return "", err
+		return nil, call[1].Interface().(error)
 	}
 	return call[0].Interface(), nil
 }
