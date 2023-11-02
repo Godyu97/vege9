@@ -1,10 +1,8 @@
 package main
 
 import (
-	"github.com/Godyu97/vege9/vegeRouter/demoApi"
-	"github.com/Godyu97/vege9/vegelog"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap/zapcore"
+	"fmt"
+	"strings"
 )
 
 func main() {
@@ -12,11 +10,10 @@ func main() {
 	//	log.Println("tags release~,return")
 	//	return
 	//}
-	vegelog.InitLogger("./t.log", zapcore.DebugLevel)
-	w := vegelog.GetLogWriter()
-	gin.DefaultErrorWriter = w
-	gin.DefaultWriter = w
-	engine := gin.Default()
-	demoApi.InitHttpDemo(engine)
-	engine.Run(":8000")
+	tokenStr := `B eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUb2tlbiI6eyJpZCI6MTZ9LCJpc3MiOiJhY2Nlc3NfdG9rZW5fand0IiwiZXhwIjoxNzAwMTg0NDIyLCJqdGkiOiI0NWEwZjFhZC1hYzNjLTRkNDQtODQ3Yy03YjUyZmFkMzQzMzUifQ.MTs_ffc5xGC1z5l9KeISzU5kCOvQoCNTYRJKpXZ04yI`
+	i := strings.IndexFunc(tokenStr, func(r rune) bool {
+		return r == 32
+	})
+	tokenStr = tokenStr[i+1:]
+	fmt.Println(tokenStr)
 }

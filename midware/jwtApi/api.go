@@ -61,7 +61,7 @@ func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {
 	i := strings.IndexFunc(tokenStr, func(r rune) bool {
 		return r == 32
 	})
-	tokenStr = tokenStr[i:]
+	tokenStr = tokenStr[i+1:]
 	//解析token
 	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (i any, err error) {
 		return []byte(j.key), nil
