@@ -3,6 +3,7 @@ package jwtApi
 import (
 	"errors"
 	"github.com/golang-jwt/jwt/v5"
+	"strings"
 	"time"
 )
 
@@ -49,9 +50,18 @@ func (j *JwtCfg) SignedTokenStrWithID(data any, id string) (string, error) {
 
 }
 
+const (
+	PrefixBearer = "Bearer"
+)
+
 // ParseToken
 // 解析 jwt token
 func (j *JwtCfg) ParseToken(tokenStr string) (*MyClaims, error) {
+	//去掉一些奇怪的东西
+	i := strings.IndexFunc(tokenStr, func(r rune) bool {
+		return r == 32
+	})
+	tokenStr = tokenStr[i:]
 	//解析token
 	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (i any, err error) {
 		return []byte(j.key), nil
