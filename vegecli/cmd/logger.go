@@ -2,16 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/Godyu97/vege9/vegelog"
 )
 
-var gLogger Logger = &defaultLog{}
-
-type Logger interface {
-	Debug(a ...any)
-	Info(a ...any)
-	Error(a ...any)
-	Fatal(a ...any)
-}
+var gLogger vegelog.Logger = &defaultLog{}
 
 type defaultLog struct{}
 
@@ -20,6 +14,10 @@ func (*defaultLog) Debug(a ...any) {
 }
 
 func (*defaultLog) Info(a ...any) {
+	fmt.Println(a...)
+}
+
+func (l *defaultLog) Warn(a ...any) {
 	fmt.Println(a...)
 }
 
@@ -47,7 +45,7 @@ func Fatal(a ...any) {
 	gLogger.Fatal(a...)
 }
 
-func SetLogger(logger Logger) {
+func SetLogger(logger vegelog.Logger) {
 	if logger != nil {
 		gLogger = logger
 	}
