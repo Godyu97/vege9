@@ -35,3 +35,22 @@ func DelRightRN(item string, r string, n int) string {
 	}
 	return item
 }
+
+//StringsContainsSlice 展开arr判断s是否Contains
+func StringsContainsSlice(s string, arr []string) bool {
+	for _, item := range arr {
+		if strings.Contains(s, item) == true {
+			return true
+		}
+	}
+	return false
+}
+
+//ReplaceLast 替换字符串最后一个匹配项
+func ReplaceLast(s, old, new string) string {
+	lastIndex := strings.LastIndex(s, old)
+	if lastIndex == -1 {
+		return s
+	}
+	return s[:lastIndex] + new + s[lastIndex+len(old):]
+}
