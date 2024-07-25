@@ -57,6 +57,10 @@ func SingleZapLogger() *zap.Logger {
 }
 
 // 为其他组件提供单例Writer接口
-func SingleWriter() zapcore.WriteSyncer {
-	return single.GetWriter()
+func SingleZapWriter() zapcore.WriteSyncer {
+	return single.GetZapWriter()
+}
+
+func SingleVegeLogger() Logger {
+	return single
 }

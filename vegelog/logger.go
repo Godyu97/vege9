@@ -59,7 +59,7 @@ func (l *VegeLog) GetZapLogger() *zap.Logger {
 	return nil
 }
 
-func (l *VegeLog) GetWriter() zapcore.WriteSyncer {
+func (l *VegeLog) GetZapWriter() zapcore.WriteSyncer {
 	if l != nil && l.WriteSyncer != nil {
 		return l.WriteSyncer
 	}
