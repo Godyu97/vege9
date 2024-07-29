@@ -418,9 +418,9 @@ var RegionMap = map[string]map[int64]string{
 
 //优先返回city
 func Code2RegionCityFirst(code int64) string {
-	if code%100000 == 0 {
-		return "全国"
-	}
+	//if code%100000 == 0 {
+	//	return "全国"
+	//}
 	if code%10000 == 0 {
 		return RegionMap["province_list"][code]
 	}
@@ -432,9 +432,9 @@ func Code2RegionCityFirst(code int64) string {
 
 //优先返回Province
 func Code2RegionProvinceFirst(code int64) string {
-	if code%100000 == 0 {
-		return "全国"
-	}
+	//if code%100000 == 0 {
+	//	return "全国"
+	//}
 	if code%100 == 0 {
 		return RegionMap["province_list"][code-code%10000]
 	}
@@ -442,9 +442,9 @@ func Code2RegionProvinceFirst(code int64) string {
 }
 
 func Code2Region(code int64) (province, city string) {
-	if code%100000 == 0 {
-		return "全国", ""
-	}
+	//if code%100000 == 0 {
+	//	return "全国", ""
+	//}
 	if code%10000 == 0 {
 		return RegionMap["province_list"][code], ""
 	}
