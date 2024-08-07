@@ -10,6 +10,7 @@ import (
 )
 
 type Logger interface {
+	Printf(format string, v ...any)
 	Debug(msg ...any)
 	Info(msg ...any)
 	Warn(msg ...any)
@@ -20,6 +21,12 @@ type Logger interface {
 type VegeLog struct {
 	*zap.Logger
 	zapcore.WriteSyncer
+}
+
+func (l *VegeLog) Printf(format string, v ...any) {
+	if l != nil && l.Logger != nil {
+		l.Info(fmt.Printf(format, v))
+	}
 }
 
 func (l *VegeLog) Debug(msg ...any) {
