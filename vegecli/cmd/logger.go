@@ -9,6 +9,10 @@ var gLogger vegelog.Logger = &defaultLog{}
 
 type defaultLog struct{}
 
+func (l *defaultLog) Printf(format string, args ...any) {
+	l.Info(fmt.Sprintf(format, args...))
+}
+
 func (*defaultLog) Debug(a ...any) {
 	fmt.Println(a...)
 }

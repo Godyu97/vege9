@@ -13,3 +13,9 @@ func Ptr2Value[T any](ptr *T) T {
 func Value2Ptr[T any](v T) *T {
 	return &v
 }
+
+func NewPtr[T any](v T) *T {
+	r := new(T)
+	*r = v
+	return r
+}

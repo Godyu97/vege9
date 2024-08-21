@@ -25,7 +25,7 @@ type VegeLog struct {
 
 func (l *VegeLog) Printf(format string, v ...any) {
 	if l != nil && l.Logger != nil {
-		l.Info(fmt.Printf(format, v))
+		l.Info(fmt.Printf(format, v...))
 	}
 }
 
