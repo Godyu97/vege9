@@ -111,3 +111,21 @@ func MapDeleteFunc[M ~map[K]V, K comparable, V any](m M, del func(K, V) bool) {
 		}
 	}
 }
+
+// 获取深层 value 的通用函数
+func GetMapNestedValue(m map[string]any, keys ...string) (any, bool) {
+	n := len(keys)
+	for i := 0; i < n-1; i++ {
+		// 确认当前层是 map 类型，并获取下一层
+		if nestedMap, ok := m[keys[i]].(map[string]any); ok {
+			m = nestedMap
+		} else {
+			return nil, false
+		}
+	}
+	if val, exists := m[keys[n-1]]; exists {
+		return val, true
+	} else {
+		return nil, false
+	}
+}

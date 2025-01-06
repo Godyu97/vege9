@@ -14,6 +14,7 @@ func Value2Ptr[T any](v T) *T {
 	return &v
 }
 
+//NewPtr 无法对map,slice等复杂类型生效
 func NewPtr[T any](v T) *T {
 	r := new(T)
 	*r = v

@@ -2,6 +2,8 @@ package vege
 
 import (
 	"strings"
+	"time"
+	"fmt"
 )
 
 // HasNum s包含数字字符返回true
@@ -53,4 +55,37 @@ func ReplaceLast(s, old, new string) string {
 		return s
 	}
 	return s[:lastIndex] + new + s[lastIndex+len(old):]
+}
+
+// ParseDateStr 解析常见的日期格式字符串到 time.Time
+func ParseDateStr(dateStr string) (time.Time, error) {
+	// 定义常见日期格式的切片
+	formats := []string{
+		"2006-01-02",                // yyyy-MM-dd
+		"2006/01/02",                // yyyy/MM/dd
+		"02-01-2006",                // dd-MM-yyyy
+		"02/01/2006",                // dd/MM/yyyy
+		"2006-01-02 15:04:05",       // yyyy-MM-dd HH:mm:ss
+		"2006/01/02 15:04:05",       // yyyy/MM/dd HH:mm:ss
+		"02-01-2006 15:04:05",       // dd-MM-yyyy HH:mm:ss
+		"02/01/2006 15:04:05",       // dd/MM/yyyy HH:mm:ss
+		"2006-01-02T15:04:05Z07:00", // ISO8601
+		"2006-01-02T15:04:05.000Z",  // ISO8601 with milliseconds
+
+		"2006-01-02 15:04",
+		"2006/01/02 15:04",
+	}
+
+	var parsedTime time.Time
+	var err error
+
+	// 尝试使用每个格式解析日期字符串
+	for _, format := range formats {
+		parsedTime, err = time.Parse(format, dateStr)
+		if err == nil {
+			return parsedTime, nil
+		}
+	}
+
+	return time.Time{}, fmt.Errorf("krEKIhxV 无法解析日期字符串: %s", dateStr)
 }
