@@ -19,7 +19,8 @@ func (q *Quit) Close() error {
 	if q == nil {
 		return errors.New("VAdjAqPi nil quit")
 	}
-	q.ch <- syscall.SIGKILL
+	//q.ch <- syscall.SIGKILL
+	q.ch <- syscall.SIGTERM
 	return nil
 }
 
