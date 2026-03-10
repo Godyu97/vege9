@@ -20,6 +20,7 @@ const (
 	Cmd_brackets = "brackets" //去除目标字符串不匹配括号
 	Cmd_mac      = "mac"      //获取本机所有的mac地址
 	Cmd_ping     = "ping"     //ping
+	Cmd_colors   = "colors"
 )
 
 var MapCLI = map[string]CLI{
@@ -67,6 +68,11 @@ var MapCLI = map[string]CLI{
 		Cmd:     Cmd_ping,
 		Func:    ping,
 		Comment: "ping",
+	},
+	Cmd_colors: {
+		Cmd:     Cmd_colors,
+		Func:    colors,
+		Comment: "colors展示",
 	},
 }
 

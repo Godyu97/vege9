@@ -9,6 +9,7 @@ import (
 	"net"
 	"strconv"
 	"time"
+	"github.com/Godyu97/vege9/vegeClipboard"
 )
 
 type LogicFunc func(argc int, argv []string)
@@ -29,7 +30,12 @@ func newps(argc int, argv []string) {
 			return
 		}
 	}
-	Info(vege.RandStringMask(n))
+	ps := vege.RandStringMask(n)
+	err := vegeClipboard.Copy(ps)
+	if err != nil {
+		Error("IZHSMxwu 复制到剪切板失败：", err)
+	}
+	Info(ps)
 }
 
 func localip(argc int, argv []string) {
@@ -255,4 +261,35 @@ func ping(argc int, argv []string) {
 	Info(fmt.Sprintf("数据包: 已发送 = %d，已接收 = %d，丢失 = %d (%.f%% 丢失)", SendCnt, RecCnt, count*2-SendCnt-RecCnt, float64(count*2-SendCnt-RecCnt)/float64(count*2)*100))
 	Info(fmt.Sprintf("往返行程的估计时间(以毫秒为单位):"))
 	Info(fmt.Sprintf("最短 = %d，最长 = %d，平均 = %d\n", MinTime, MaxTime, SumTime/int64(count)))
+}
+
+func colors(argc int, argv []string) {
+	// 1️⃣ 16 色 ANSI
+	fmt.Println("=== ANSI 16 Colors ===")
+	for i := 0; i < 16; i++ {
+		fmt.Printf("\x1b[48;5;%dm %3d \x1b[0m", i, i)
+		if (i+1)%8 == 0 {
+			fmt.Println()
+		}
+	}
+
+	// 2️⃣ 256 色
+	fmt.Println("\n=== ANSI 256 Colors ===")
+	for i := 0; i < 256; i++ {
+		fmt.Printf("\x1b[48;5;%dm %3d \x1b[0m", i, i)
+		if (i+1)%16 == 0 {
+			fmt.Println()
+		}
+	}
+
+	// 3️⃣ TrueColor (24-bit) 彩虹渐变
+	fmt.Println("\n=== TrueColor Gradient ===")
+	for r := 0; r <= 255; r += 51 {
+		for g := 0; g <= 255; g += 51 {
+			for b := 0; b <= 255; b += 51 {
+				fmt.Printf("\x1b[48;2;%d;%d;%dm  \x1b[0m", r, g, b)
+			}
+			fmt.Println()
+		}
+	}
 }
