@@ -14,9 +14,14 @@ OUT_NAME ?= $(CURRENT_DIR)
 CGO ?= 0
 #默认GOOS=linux
 OS ?= linux
-
+TAGS ?= ""
+ifeq ($(TAGS),)
+TAG_ARGS :=
+else
+TAG_ARGS := -tags $(TAGS)
+endif
 ifeq ($(OS),windows)
-	OUT_NAME := $(CURRENT_DIR).exe
+	OUT_NAME := $(OUT_NAME).exe
 endif
 
 build:
@@ -29,7 +34,8 @@ release:
 	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=amd64 go build -ldflags '-s -w --extldflags "-static -fpic"' -o $(BUILD_DIR)/$(OUT_NAME)
 
 install:
-	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=amd64 go build -tags $(TAGS) -ldflags '-s -w --extldflags "-static -fpic"' -o $(BUILD_DIR)/$(OUT_NAME)
+	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=amd64 go build $(TAG_ARGS) -ldflags '-s -w --extldflags "-static -fpic"' -o $(BUILD_DIR)/$(OUT_NAME)
+	@echo "vege installed $(BUILD_DIR)/$(OUT_NAME)"
 
 
 chmod: $(BUILD_DIR)/$(OUT_NAME)
